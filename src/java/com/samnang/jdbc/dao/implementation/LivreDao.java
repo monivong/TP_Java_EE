@@ -145,7 +145,7 @@ public class LivreDao extends Dao<Livre> {
         List<Livre> liste = new LinkedList<Livre>();
         try {
             Statement stm = cnx.createStatement();
-            ResultSet r = stm.executeQuery("SELECT * FROM Livre");
+            ResultSet r = stm.executeQuery("SELECT * FROM livre");
             while (r.next()) {
                 Livre c = new Livre(r.getString("ISBN"), r.getString("Titre"), r.getString("Edition"),
                                     r.getInt("Annee"), r.getString("MotsCles"), r.getString("NomAuteur"),
