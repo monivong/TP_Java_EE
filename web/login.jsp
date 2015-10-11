@@ -19,7 +19,8 @@
             out.println("<span class=\"errorMessage\">"+request.getAttribute("message")+"</span>");
         }
 %>
-        <form action="login.do?action=login" method="post">
+        <form action="./controleurFrontal?action=login" method="post">
+            <table>
             <tr>
                 <td>Nom utilisateur : </td>
                 <td><input type="text" name="username"/></td>
@@ -29,7 +30,10 @@
                 <td><input type="password" name="password"/></td>
             </tr>
             <!-- input type="hidden" name="action" value="login"/ -->
-            <tr colspan="2"><input type="submit" value="Me connecter"/></tr>
+            <tr colspan="2">
+                <td><input type="submit" value="Me connecter"/></td>
+            </tr>
+            </table>
         </form>
     </body>
 </html>

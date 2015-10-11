@@ -54,7 +54,7 @@ public class Login extends HttpServlet {
             session.setAttribute("connected", u);
             session.setAttribute("user.username", user.getUsername());
             session.setAttribute("user.password", user.getPassword());
-            //session.setAttribute("user", user); ERREUR ! On ne peut pas affecté un objet dans l'objet de session            
+            session.setAttribute("user", user);//ERREUR ! On ne peut pas affecté un objet dans l'objet de session            
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp");            
             r.forward(request, response);
         }

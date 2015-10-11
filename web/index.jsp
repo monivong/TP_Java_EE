@@ -30,6 +30,7 @@
         </script>
     </head>
     <body>
+        <h1>Bonjour <%= request.getSession().getAttribute("user.username") %></h1><a href="./controleurFrontal?action=logout">Me déconnecter</a>
         <div id="mesOnglets">
             <ul>
               <li><a href="#ongletEvaluerUnLivre">Évaluer un livre</a></li>

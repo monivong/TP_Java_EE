@@ -6,7 +6,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ControleurFrontal</servlet-name>
-        <url-pattern>*.do</url-pattern>
+        <url-pattern>/controleurFrontal</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>login</servlet-name>

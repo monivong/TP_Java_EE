@@ -21,9 +21,13 @@ public class ControleurFrontal extends HttpServlet {
             if ("logout".equals(action)) {
                 RequestDispatcher r = this.getServletContext().getRequestDispatcher("/signout");  //redirection vers la servlet login
                 r.forward(request, response);                
-            }                        
+            }
+            if("chercherUnCours".equals(action)) {
+                this.getServletContext().getRequestDispatcher("/findACourse").forward(request, response);
+            }
         } else {
             request.setAttribute("message", "ControleurFrontal : « Je n'ai rien reçu... »");
+            this.getServletContext().getRequestDispatcher("/index.jsp");
         }
     }
 
