@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="com.samnang.jdbc.dao.implementation.EvaluationCoursDao"%>
 <%@page import="com.samnang.entites.Cours"%>
 <%@page import="com.samnang.jdbc.dao.implementation.CoursDao"%>
@@ -27,7 +28,19 @@
             <table>
                 <tr>
                     <th>Saisissez le numéro du cours : </th>
-                    <td><input type="text" name="numeroCours"/></td>
+                    <td>
+                        <input list="lesCoursExistant" name="numeroCours"/>
+                        <datalist id="lesCoursExistant">
+<%
+                            Class.forName("com.mysql.jdbc.Driver");
+                            Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");                    
+                            CoursDao unCoursDao = new CoursDao(Connexion.getInstance());
+                            List<Cours> listeDesCours = unCoursDao.findAll();
+                            for(int i=0; i < listeDesCours.size(); i++)
+                                out.println("<option value=\"" + listeDesCours.get(i).getNumero() + "\"/>");
+%>
+                        </datalist><!-- source de : http://www.w3schools.com/tags/tag_datalist.asp -->
+                    </td>
                     <input type="hidden" name="action" value="chercherUnCours"/>
                     <td><input type="submit" value="Trouver"/></td>
                 </tr>
