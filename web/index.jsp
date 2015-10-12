@@ -19,7 +19,7 @@
         <script type="text/javascript" src="./script/jquery-ui.min.js"></script>
         <script type="text/javascript" src="./script/jquery-ui.js"></script>        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script><!-- source de https://developers.google.com/speed/libraries/ -->
-        <link rel="stylesheet" type="text/css" href="C:\UwAmp\www\JavaEE_TP_de_session\web\script\styles.css">        
+        <link rel="stylesheet" type="text/css" href="\script\styles.css">        
         <script type="text/css">
             #mesOnglets {
                 background-color : blue;
@@ -30,7 +30,7 @@
         </script>
     </head>
     <body>
-        <h1>Bonjour <%= request.getSession().getAttribute("user.username") %></h1><a href="./controleurFrontal?action=logout">Me déconnecter</a>
+        <h1>Bonjour <%= request.getSession().getAttribute("user.username") %></h1><a href=\"./controleurFrontal?action=logout\">Me déconnecter</a>
         <div id="mesOnglets">
             <ul>
               <li><a href="#ongletEvaluerUnLivre">Évaluer un livre</a></li>

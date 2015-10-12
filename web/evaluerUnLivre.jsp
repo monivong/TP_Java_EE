@@ -8,15 +8,19 @@
 <%@page import="java.util.LinkedList"%>
 <div>
     <h1>Évaluer un livre</h1>
+    <% if(request.getParameter("message") != null ) out.println("<h3>" + request.getParameter("message") + "</h3>"); %>
     <div id="informationsDuLivre">
-<%
+<%    
+    if( request.getParameter("action") != null && request.getParameter("action").equalsIgnoreCase("liste") ) {
+        out.println("<h3>"+ request.getParameter("note") +"</h3>");
+    } 
     if( request.getParameter("livreAEvaluer") != null ) {
         String ISBN = request.getParameter("livreAEvaluer");
         Class.forName("com.mysql.jdbc.Driver");
         Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");
         LivreDao unLivreDao = new LivreDao(Connexion.getInstance());
         Livre unLivre = unLivreDao.read(ISBN.trim());
-        if(unLivre != null) {
+        if(unLivre != null) {            
 %>
             <table border="1px solid black">
                 <tr>
@@ -71,38 +75,51 @@
 <%
         }
 %>
-    </div><!-- Fin div id=informationDuLivre -->
+        </div><!-- Fin div id=informationDuLivre -->
         <div id="evaluation">
-            <table>
-                <tr>
-                    <td>Note : </td>
-                    <td><input type="number" min="0" max="10" name="note"/></td>
-                </tr>
-                <tr>
-                    <td>Commentaire : </td>
-                    <td><textarea rows="5" cols="50"></textarea></td>
-                </tr>
-                <tr>
-                    <td>Évaluation : </td>
-                    <td><textarea rows="5" cols="50"></textarea><br/>
+            <form action="./controleurFrontal?action=soumettreUneEvaluation"  method="post">
+                <table>
+                    <tr>
+                        <td>Note : </td>
+                        <!--td><input type="number" min="0" max="10" name="note" value="0"/></td-->
+                        <td>
+                            <select id="note">
 <%
-                    out.println("<select>");
-                    Class.forName("com.mysql.jdbc.Driver");
-                    Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");
-                    CoursDao unCoursDao = new CoursDao(Connexion.getInstance());
-                    List<Cours> listeDesCours = unCoursDao.findAll();
-                    for(int i=0; i <listeDesCours.size(); i++) {
-                        out.println("<option>" + listeDesCours.get(i).getNumero() + " :: " + listeDesCours.get(i).getNom() + "</option>");
-                    }
-                    out.println("</select>");
-                    out.println("</td>");
+                            for(int i=0; i < 11; i++)
+                                out.println("<option value=\""+ i +"\">" + i + "</option>");
+%>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Commentaire : </td>
+                        <td><textarea id="commentaire" rows="5" cols="100"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Type d'évaluation : </td>
+                        <td>
+<%
+                        out.println("<select id=\"typeEvaluation\">");
+                        out.println("<option selected=\"selected\">générale</option>");
+                        //source de : http://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript 
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");
+                        CoursDao unCoursDao = new CoursDao(Connexion.getInstance());
+                        List<Cours> listeDesCours = unCoursDao.findAll();
+                        for(int i=0; i <listeDesCours.size(); i++) {
+                            out.println("<option value=\""+ listeDesCours.get(i).getNumero() +"\">" + listeDesCours.get(i).getNumero() + " :: " + listeDesCours.get(i).getNom() + "</option>");
+                        }
+                        out.println("</select>");
+                        out.println("</td>");
 %>                
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Soumettre évaluation"/></td>
-                </tr>
-            </table>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Soumettre évaluation"/></td>
+                    </tr>
+                </table>
+            </form>
         </div><!-- Fin div id=evaluation -->
+        <a href="./index.jsp">Retourner à la page d'accueil</a>
         <script type="text/css">
             #informationsDuLivre {
                 float : left;
@@ -142,6 +159,5 @@
             cout.println("<h3>Erreur de lecture dans la BD !!</h3>");
         }
     }   
-%>   
-    <a href="./index.jsp">Retourner à la page d'accueil</a>
+%>       
 </div>

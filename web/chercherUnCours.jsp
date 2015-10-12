@@ -5,13 +5,14 @@
 <div>
     <h1>Chercher un cours</h1>
 <%
-    if( request.getParameter("action") != null ) {
-        String numeroLivre = request.getParameter("action");
-        if(numeroLivre.trim() != null || numeroLivre.equals("")) {
+    if( request.getParameter("action") != null && !request.getParameter("action").equalsIgnoreCase("login") ) {
+        String numeroCours = request.getParameter("action");
+        if( numeroCours.trim().equalsIgnoreCase("") ) {
+            out.println("<h3>Erreur ! Veuillez saisir un numéro.</h3>");
             Class.forName("com.mysql.jdbc.Driver");
             Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");
             CoursDao unCoursDao = new CoursDao(Connexion.getInstance());
-            Cours unCours = unCoursDao.read(numeroLivre);
+            Cours unCours = unCoursDao.read(numeroCours);
             if(unCours == null) {
                 request.setAttribute("message", "Erreur ! Il n'existe aucun cours avec ce numéro...");
             } else {
@@ -22,7 +23,7 @@
         }
     } else {       
 %>    
-        <form action="/chercherUnCours.jsp" method="get">
+        <form action="./chercherUnCours.jsp" method="get">
             <table>
                 <tr>
                     <th>Saisissez le numéro du cours : </th>

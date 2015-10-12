@@ -10,10 +10,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>login.jsp</title>
+        <title>login.jsp</title>        
     </head>
     <body>
-        <h1>Authentification</h1>
+        <h1>Authentification (enseignant)</h1>
 <%
         if( request.getAttribute("message") != null ) {
             out.println("<span class=\"errorMessage\">"+request.getAttribute("message")+"</span>");
@@ -35,5 +35,10 @@
             </tr>
             </table>
         </form>
+        <script type="text/css">
+            .errorMessage {
+                color : red;
+            }
+        </script>
     </body>
 </html>

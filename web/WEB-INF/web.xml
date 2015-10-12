@@ -24,6 +24,14 @@
         <servlet-name>logout</servlet-name>
         <url-pattern>/signout</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>soumettreUneEvaluation</servlet-name>
+        <servlet-class>com.samnang.web.mvc.SoumettreUneEvaluation</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>soumettreUneEvaluation</servlet-name>
+        <url-pattern>/submitEvaluation</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
