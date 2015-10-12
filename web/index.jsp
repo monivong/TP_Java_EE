@@ -32,12 +32,20 @@
     <body>
         <h1>Bonjour <%= request.getSession().getAttribute("user.username") %></h1><a href=\"./controleurFrontal?action=logout\">Me déconnecter</a>
         <div id="mesOnglets">
+            <%--
             <ul>
               <li><a href="#ongletEvaluerUnLivre">Évaluer un livre</a></li>
               <li><a href="#ongletConsulterUneEvaluation">Consulter une évaluation</a></li>
               <li><a href="#ongletConsulterLaListeDesCours">Consulter la liste des cours</a></li>
               <li><a href="#ongletChercherUnCours">Chercher un cours</a></li>
             </ul>
+            --%>
+            <nav>
+                <a href="#ongletEvaluerUnLivre">Évaluer un livre</a> |
+                <a href="#ongletConsulterUneEvaluation">Consulter une évaluation</a> |
+                <a href="#ongletConsulterLaListeDesCours">Consulter la liste des cours</a> |
+                <a href="#ongletChercherUnCours">Chercher un cours</a>
+            </nav><!-- source de : http://www.w3schools.com/tags/tag_nav.asp -->
             <div id="ongletEvaluerUnLivre">
                 <jsp:include page="evaluerUnLivre.jsp"/>
             </div>
