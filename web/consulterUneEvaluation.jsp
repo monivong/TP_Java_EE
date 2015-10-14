@@ -48,6 +48,7 @@
                     <th>Nombre de pages</th>
                     <th>Notes des évaluations</th>
                     <th>Commentaire</th>
+                    <th>Évaluer</th>
                 </tr>
                 <tr>
 <%
@@ -63,6 +64,7 @@
                     out.println("<td>" + unLivre.getNbPages() + "</td>");
                     out.println("<td>" + unLivre.getNote() + "</td>");
                     out.println("<td>" + "À FAIRE" + "</td>");
+                    out.println("<td><a href=\"./evaluerUnLivre.jsp?livreAEvaluer='"+ unLivre.getISBN() + "'\">Évaluer le livre</a></td>");
 %>
                 </tr>
             </table>
