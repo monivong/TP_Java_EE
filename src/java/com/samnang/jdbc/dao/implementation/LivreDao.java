@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -146,29 +147,22 @@ public class LivreDao extends Dao<Livre> {
         }
         return null;
     }
-    public Livre readByKeywordInTitle(String keyword) {        
+    public List<Livre> readByKeywordInTitle(String keyword) {        
         PreparedStatement stm = null;
+        List<Livre> listeDesLivres = new ArrayList<Livre>();
         try {
-            stm = cnx.prepareStatement("SELECT * FROM livre WHERE Titre = ?");
-            stm.setString(1,"'*"+keyword+"*'");
-            ResultSet r = stm.executeQuery();
-            if (r.next()) {
-                Livre c = new Livre();
-                c.setISBN(r.getString(("ISBN")));
-                c.setTitre(r.getString("Titre"));
-                c.setEdition(r.getString("Edition"));
-                c.setAnnee(r.getInt("Annee"));
-                c.setMotsCles(r.getString("MotsCles"));
-                c.setNomAuteur(r.getString("NomAuteur"));
-                c.setEtat(r.getString("etat"));
-                c.setDescription(r.getString("Description"));
-                c.setNbPages(r.getInt("NbPages"));
-                c.setNote(r.getInt("note"));
-                c.setNbEvaluations(r.getInt("nbEvaluations"));
-                r.close();
-                stm.close();
-                return c;
+            stm = cnx.prepareStatement("SELECT * FROM livre WHERE Titre LIKE ?");            
+            stm.setString(1,"%"+keyword+"%");// Bizarrement "'%"+ keyword + "%'" ne fonctionne pas ???
+            ResultSet r = stm.executeQuery();            
+            while (r.next()) {
+                Livre c = new Livre(r.getString("ISBN"), r.getString("Titre"), r.getString("Edition"),
+                                    r.getInt("Annee"), r.getString("MotsCles"), r.getString("NomAuteur"),
+                                    r.getString("etat"), r.getString("Description"), r.getInt("NbPages"),
+                                    r.getInt("note"), r.getInt("nbEvaluations"));
+                listeDesLivres.add(c);
             }
+            r.close();
+            stm.close();            
         } catch (SQLException exp) {
 			
         } finally {
@@ -180,7 +174,7 @@ public class LivreDao extends Dao<Livre> {
                 }
             }
         }
-        return null;
+        return listeDesLivres;
     }
     public Livre readByDescription(String description) {        
         PreparedStatement stm = null;

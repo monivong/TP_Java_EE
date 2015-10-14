@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RechercherParISBN extends HttpServlet {
+public class RechercherParMotsClesDansTitre extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            if( request.getAttribute("plusieursResultats") != null ) request.removeAttribute("plusieursResultats");
+            if( request.getAttribute("unResultat") != null ) request.removeAttribute("unResultat");
             
-            String ISBN = request.getParameter("isbn");
-            if( ISBN==null || "".equals( ISBN.trim() ) ) {
-                request.setAttribute("message", "ERREUR ! L'ISBN est invalide.");
+            String keyword = request.getParameter("motsDansLeTitre");
+            if( keyword == null || "".equals( keyword.trim() ) ) {
+                request.setAttribute("message", "ERREUR ! Le mots dans le titre est invalide.");
                 request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
             } else {
                 try {
@@ -32,15 +32,15 @@ public class RechercherParISBN extends HttpServlet {
                 }       
                 Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");                
                 LivreDao unLivreDao = new LivreDao( Connexion.getInstance() );
-                Livre unLivre = unLivreDao.readByISBN( ISBN );
-                if( unLivre == null ) {
-                    request.setAttribute("message", "ERREUR ! Il n'existe aucun livre avec l'ISBN { " + ISBN +" }");
+                List<Livre> ListeDesLivres = unLivreDao.readByKeywordInTitle(keyword);
+                if( ListeDesLivres == null ) {
+                    request.setAttribute("message", "ERREUR ! Il n'existe aucun titre portant le mot { " + keyword +" }");
                     request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("unResultat", unLivre);
+                    request.setAttribute("plusieursResultats", ListeDesLivres);
                     request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
                 }
-            }            
+            }
         }
     }
 
