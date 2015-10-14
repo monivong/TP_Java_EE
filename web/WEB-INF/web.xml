@@ -4,6 +4,10 @@
         <servlet-name>ControleurFrontal</servlet-name>
         <servlet-class>com.samnang.web.mvc.ControleurFrontal</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RechercherParISBN</servlet-name>
+        <servlet-class>com.samnang.web.mvc.RechercherParISBN</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControleurFrontal</servlet-name>
         <url-pattern>/controleurFrontal</url-pattern>
@@ -19,7 +23,7 @@
     <servlet>
         <servlet-name>logout</servlet-name>
         <servlet-class>com.samnang.web.mvc.Logout</servlet-class>
-    </servlet>        
+    </servlet>
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
         <url-pattern>/signout</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>soumettreUneEvaluation</servlet-name>
         <url-pattern>/submitEvaluation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RechercherParISBN</servlet-name>
+        <url-pattern>/findByISBN</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

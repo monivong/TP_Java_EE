@@ -68,7 +68,7 @@ public class LivreDao extends Dao<Livre> {
         }
         return false;
     }
-
+// R E A D
     @Override
     public Livre read(String isbn) {        
         PreparedStatement stm = null;
@@ -110,7 +110,151 @@ public class LivreDao extends Dao<Livre> {
         }
         return null;
     }
-
+    public Livre readByISBN(String isbn) {        
+        PreparedStatement stm = null;
+        try {
+            stm = cnx.prepareStatement("SELECT * FROM livre WHERE ISBN = ?");
+            stm.setString(1,isbn);
+            ResultSet r = stm.executeQuery();
+            if (r.next()) {
+                Livre c = new Livre();
+                c.setISBN(r.getString(("ISBN")));
+                c.setTitre(r.getString("Titre"));
+                c.setEdition(r.getString("Edition"));
+                c.setAnnee(r.getInt("Annee"));
+                c.setMotsCles(r.getString("MotsCles"));
+                c.setNomAuteur(r.getString("NomAuteur"));
+                c.setEtat(r.getString("etat"));
+                c.setDescription(r.getString("Description"));
+                c.setNbPages(r.getInt("NbPages"));
+                c.setNote(r.getInt("note"));
+                c.setNbEvaluations(r.getInt("nbEvaluations"));
+                r.close();
+                stm.close();
+                return c;
+            }
+        } catch (SQLException exp) {
+			
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {            
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+    public Livre readByKeywordInTitle(String keyword) {        
+        PreparedStatement stm = null;
+        try {
+            stm = cnx.prepareStatement("SELECT * FROM livre WHERE Titre = ?");
+            stm.setString(1,"'*"+keyword+"*'");
+            ResultSet r = stm.executeQuery();
+            if (r.next()) {
+                Livre c = new Livre();
+                c.setISBN(r.getString(("ISBN")));
+                c.setTitre(r.getString("Titre"));
+                c.setEdition(r.getString("Edition"));
+                c.setAnnee(r.getInt("Annee"));
+                c.setMotsCles(r.getString("MotsCles"));
+                c.setNomAuteur(r.getString("NomAuteur"));
+                c.setEtat(r.getString("etat"));
+                c.setDescription(r.getString("Description"));
+                c.setNbPages(r.getInt("NbPages"));
+                c.setNote(r.getInt("note"));
+                c.setNbEvaluations(r.getInt("nbEvaluations"));
+                r.close();
+                stm.close();
+                return c;
+            }
+        } catch (SQLException exp) {
+			
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {            
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+    public Livre readByDescription(String description) {        
+        PreparedStatement stm = null;
+        try {
+            stm = cnx.prepareStatement("SELECT * FROM livre WHERE Description = ?");
+            stm.setString(1,"'*"+description+"*'");
+            ResultSet r = stm.executeQuery();
+            if (r.next()) {
+                Livre c = new Livre();
+                c.setISBN(r.getString(("ISBN")));
+                c.setTitre(r.getString("Titre"));
+                c.setEdition(r.getString("Edition"));
+                c.setAnnee(r.getInt("Annee"));
+                c.setMotsCles(r.getString("MotsCles"));
+                c.setNomAuteur(r.getString("NomAuteur"));
+                c.setEtat(r.getString("etat"));
+                c.setDescription(r.getString("Description"));
+                c.setNbPages(r.getInt("NbPages"));
+                c.setNote(r.getInt("note"));
+                c.setNbEvaluations(r.getInt("nbEvaluations"));
+                r.close();
+                stm.close();
+                return c;
+            }
+        } catch (SQLException exp) {
+			
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {            
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+    public Livre readByKeyword(String keyword) {        
+        PreparedStatement stm = null;
+        try {
+            stm = cnx.prepareStatement("SELECT * FROM livre WHERE MotsCles = ?");
+            stm.setString(1,"'*"+ keyword +"*'");
+            ResultSet r = stm.executeQuery();
+            if (r.next()) {
+                Livre c = new Livre();
+                c.setISBN(r.getString(("ISBN")));
+                c.setTitre(r.getString("Titre"));
+                c.setEdition(r.getString("Edition"));
+                c.setAnnee(r.getInt("Annee"));
+                c.setMotsCles(r.getString("MotsCles"));
+                c.setNomAuteur(r.getString("NomAuteur"));
+                c.setEtat(r.getString("etat"));
+                c.setDescription(r.getString("Description"));
+                c.setNbPages(r.getInt("NbPages"));
+                c.setNote(r.getInt("note"));
+                c.setNbEvaluations(r.getInt("nbEvaluations"));
+                r.close();
+                stm.close();
+                return c;
+            }
+        } catch (SQLException exp) {
+			
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {            
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+// U P D A T E
     @Override
     public boolean update(Livre x) {
         Statement stm = null;
@@ -139,7 +283,7 @@ public class LivreDao extends Dao<Livre> {
         }
         return false;
     }
-
+// F I N D A L L
     @Override
     public List<Livre> findAll() {
         List<Livre> liste = new LinkedList<Livre>();

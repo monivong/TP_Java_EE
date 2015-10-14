@@ -28,6 +28,18 @@ public class ControleurFrontal extends HttpServlet {
             if("soumettreUneEvaluation".equals(action)) {
                 this.getServletContext().getRequestDispatcher("/submitEvaluation").forward(request, response);
             }
+            if("rechercherParISBN".equals(action)) {
+                this.getServletContext().getRequestDispatcher("/findByISBN").forward(request, response);
+            }
+            if("rechercherParMotsClesDansTitre".equals(action)) {
+                this.getServletContext().getRequestDispatcher("/findByKeywordInTitle").forward(request, response);
+            }
+            if("rechercherParDescription".equals(action)) {
+                this.getServletContext().getRequestDispatcher("/findByDescription").forward(request, response);
+            }
+            if("rechercherParMotsCles".equals(action)) {
+                this.getServletContext().getRequestDispatcher("/findByKeyword").forward(request, response);
+            }
         } else {
             request.setAttribute("message", "ControleurFrontal : « Je n'ai rien reçu... »");
             this.getServletContext().getRequestDispatcher("/index.jsp");
