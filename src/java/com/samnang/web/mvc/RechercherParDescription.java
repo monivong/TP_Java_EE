@@ -38,7 +38,7 @@ public class RechercherParDescription extends HttpServlet {
                     request.setAttribute("message", "ERREUR ! Il n'existe aucun livre ayant comme description { " + description +" }");
                     request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
                 } else if( listeDesLivres.size() == 1 ) {
-                    request.setAttribute("unResultat", listeDesLivres.get(1) );
+                    request.setAttribute("unResultat", listeDesLivres.get(0) );
                     request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
                 } else {
                     request.setAttribute("plusieursResultats", listeDesLivres);

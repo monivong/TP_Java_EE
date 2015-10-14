@@ -42,7 +42,7 @@
             --%>
             <nav>
                 <a href="#ongletEvaluerUnLivre">Évaluer un livre</a> |
-                <a href="#ongletConsulterUneEvaluation">Consulter une évaluation</a> |
+                <a href="./consulterUneEvaluation.jsp">Consulter une évaluation</a> |
                 <a href="#ongletConsulterLaListeDesCours">Consulter la liste des cours</a> |
                 <a href="#ongletChercherUnCours">Chercher un cours</a>
             </nav><!-- source de : http://www.w3schools.com/tags/tag_nav.asp -->

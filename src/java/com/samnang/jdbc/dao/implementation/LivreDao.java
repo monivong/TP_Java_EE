@@ -205,29 +205,22 @@ public class LivreDao extends Dao<Livre> {
         }
         return listeDesLivres;
     }
-    public Livre readByKeyword(String keyword) {        
+    public List<Livre> readByKeyword(String keyword) {        
         PreparedStatement stm = null;
+        List<Livre> listeDesLivres = new ArrayList<Livre>();
         try {
-            stm = cnx.prepareStatement("SELECT * FROM livre WHERE MotsCles = ?");
+            stm = cnx.prepareStatement("SELECT * FROM livre WHERE MotsCles LIKE ?");
             stm.setString(1,"%"+ keyword +"%");
             ResultSet r = stm.executeQuery();
-            if (r.next()) {
-                Livre c = new Livre();
-                c.setISBN(r.getString(("ISBN")));
-                c.setTitre(r.getString("Titre"));
-                c.setEdition(r.getString("Edition"));
-                c.setAnnee(r.getInt("Annee"));
-                c.setMotsCles(r.getString("MotsCles"));
-                c.setNomAuteur(r.getString("NomAuteur"));
-                c.setEtat(r.getString("etat"));
-                c.setDescription(r.getString("Description"));
-                c.setNbPages(r.getInt("NbPages"));
-                c.setNote(r.getInt("note"));
-                c.setNbEvaluations(r.getInt("nbEvaluations"));
-                r.close();
-                stm.close();
-                return c;
+            while (r.next()) {
+                Livre c = new Livre(r.getString("ISBN"), r.getString("Titre"), r.getString("Edition"),
+                                    r.getInt("Annee"), r.getString("MotsCles"), r.getString("NomAuteur"),
+                                    r.getString("etat"), r.getString("Description"), r.getInt("NbPages"),
+                                    r.getInt("note"), r.getInt("nbEvaluations"));
+                listeDesLivres.add(c);
             }
+            r.close();
+            stm.close();
         } catch (SQLException exp) {
 			
         } finally {
@@ -239,7 +232,7 @@ public class LivreDao extends Dao<Livre> {
                 }
             }
         }
-        return null;
+        return listeDesLivres;
     }
 // U P D A T E
     @Override
