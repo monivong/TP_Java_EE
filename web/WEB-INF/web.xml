@@ -12,6 +12,10 @@
         <servlet-name>RechercherParMotsClesDansTitre</servlet-name>
         <servlet-class>com.samnang.web.mvc.RechercherParMotsClesDansTitre</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RechercherParDescription</servlet-name>
+        <servlet-class>com.samnang.web.mvc.RechercherParDescription</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControleurFrontal</servlet-name>
         <url-pattern>/controleurFrontal</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>RechercherParMotsClesDansTitre</servlet-name>
         <url-pattern>/findByKeywordInTitle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RechercherParDescription</servlet-name>
+        <url-pattern>/findByDescription</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

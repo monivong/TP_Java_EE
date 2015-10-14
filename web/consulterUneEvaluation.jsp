@@ -89,7 +89,8 @@
             </tr>
             <tr>
                 <td>Description : </td>
-                <td><textarea rows="3" cols="30"></textarea></td>
+                <%--<td><textarea rows="3" cols="30" name="description"></textarea></td>--%><!-- Difficile à récupérer la valeur ... -->
+                <td><input type="text" name="description"/></td>
                 <td><input type="submit" value="Go" formaction="./controleurFrontal?action=rechercherParDescription" formmethod="post"/></td>
             </tr>
             <tr>
