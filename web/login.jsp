@@ -23,11 +23,11 @@
             <table>
             <tr>
                 <td>Nom utilisateur : </td>
-                <td><input type="text" name="username"/></td>
+                <td><input type="text" name="username" value="<%= request.getParameter("username") != null ? request.getParameter("username") : "" %>"/></td>
             </tr>
             <tr>
                 <td>Mot de passe : </td>
-                <td><input type="password" name="password"/></td>
+                <td><input type="password" name="password" value="<%= request.getParameter("password") != null ? request.getParameter("password") : "" %>"/></td>
             </tr>
             <!-- input type="hidden" name="action" value="login"/ -->
             <tr colspan="2">

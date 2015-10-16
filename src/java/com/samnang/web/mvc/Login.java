@@ -19,11 +19,14 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String  u = request.getParameter("username"), p = request.getParameter("password");
         if (u==null || u.trim().equalsIgnoreCase("")) {
-            //Utilisateur inexistant
-            request.setAttribute("message", "Username obligatoire");
+            request.setAttribute("message", "Attention ! Vous avez oublié de saisir votre nom d'utilisateur.");
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/login.jsp");
             r.forward(request, response);
             return;
+        }
+        if( p == null || p.trim().equals("") ) {
+            request.setAttribute("message", "Attention ! Vous avez oublié de saisir votre mot de passe.");
+            request.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
 
         try {
@@ -39,22 +42,22 @@ public class Login extends HttpServlet {
         
         if (user==null) {
             //Utilisateur inexistant
-            request.setAttribute("message", "Utilisateur "+u+" inexistant.");
+            request.setAttribute("message", "Désolé, il n'existe aucun utilisateur du nom de { "+ u +" }");
             //response.sendRedirect("login.jsp");Ne fonctionne pas correctement (ie. perd le message d'erreur).
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/login.jsp");
             r.forward(request, response);
         } else if (!user.getPassword().equals(p)) {
             //Mot de passe incorrect
-            request.setAttribute("message", "Mot de passe incorrect.");
+            request.setAttribute("message", "Erreur ! Le mot de passe saisi est incorrect.");
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/login.jsp");
             r.forward(request, response);
         } else {
             //connexion OK
             HttpSession session = request.getSession(true);
-            session.setAttribute("connected", u);
+            session.setAttribute("connected", u);            
             session.setAttribute("user.username", user.getUsername());
             session.setAttribute("user.password", user.getPassword());
-            session.setAttribute("user", user);//ERREUR ! On ne peut pas affecté un objet dans l'objet de session            
+            //session.setAttribute("user", user);//ERREUR ! On ne peut pas affecté un objet dans l'objet de session            
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp");            
             r.forward(request, response);
         }

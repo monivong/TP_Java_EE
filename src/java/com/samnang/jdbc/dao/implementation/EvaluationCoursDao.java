@@ -18,9 +18,9 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
 
     @Override
     public boolean create(EvaluationCours x) {
-        String req =    "INSERT INTO user (`id` , `idLivre`, `idProf`, `idCours`, `note`, `commentaire`) " + 
-                        "VALUES ('" +   x.getId() + "','" + x.getIdLivre() + "','" + x.getIdProf() + "','" + 
-                                        x.getIdCours() +  "','" + x.getNote() + "','" + x.getCommentaire() + "')";
+        String req =    "INSERT INTO evaluationcours (`idLivre`, `idProf`, `idCours`, `note`, `commentaire`) " + 
+                        "VALUES ('" + x.getIdLivre() + "','" + x.getIdProf() + "','" + 
+                                        x.getIdCours() +  "', " + x.getNote() + ",'" + x.getCommentaire() + "')";
         Statement stm = null;
         try {
             stm = cnx.createStatement();
@@ -48,7 +48,7 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
         Statement stm = null;
         try {
             stm = cnx.createStatement();
-            int n = stm.executeUpdate("DELETE FROM evaluationcours WHERE id='" + x.getId() + "'");
+            int n = stm.executeUpdate("DELETE FROM evaluationcours WHERE id = '" + x.getId() + "'");
             if (n > 0) {
                 stm.close();
                 return true;
@@ -109,8 +109,8 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
         Statement stm = null;
         try {
             String req =    "UPDATE evaluationcours SET idLivre = '" + x.getIdLivre() + "', idProf = '" + x.getIdProf() + 
-                                                    "', idCours = '" + x.getIdCours() + "', note = '" + x.getNote() + 
-                                                    "', commentaire = '" + x.getCommentaire() +
+                                                    "', idCours = '" + x.getIdCours() + "', note = " + x.getNote() + 
+                                                    ", commentaire = '" + x.getCommentaire() +
                             " WHERE id = '" + x.getId() + "'";
             stm = cnx.createStatement();
             int n = stm.executeUpdate(req);

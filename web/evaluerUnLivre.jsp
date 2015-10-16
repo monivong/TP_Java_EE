@@ -8,7 +8,7 @@
 <%@page import="java.util.LinkedList"%>
 <div>
     <h1>Évaluer un livre</h1>
-    <% if(request.getParameter("message") != null ) out.println("<h3>" + request.getParameter("message") + "</h3>"); %>
+    <% if(request.getAttribute("message") != null ) out.println("<h3>" + request.getAttribute("message") + "</h3>"); %>
     <div id="informationsDuLivre">
 <%    
     if( request.getParameter("action") != null && request.getParameter("action").equalsIgnoreCase("liste") ) {
@@ -83,7 +83,7 @@
                         <td>Note : </td>
                         <!--td><input type="number" min="0" max="10" name="note" value="0"/></td-->
                         <td>
-                            <select id="note">
+                            <select name="note">
 <%
                             for(int i=0; i < 11; i++)
                                 out.println("<option value=\""+ i +"\">" + i + "</option>");
@@ -93,13 +93,13 @@
                     </tr>
                     <tr>
                         <td>Commentaire : </td>
-                        <td><textarea id="commentaire" rows="5" cols="100"></textarea></td>
+                        <td><input type="text" name="commentaire" size="100"/></td>
                     </tr>
                     <tr>
                         <td>Type d'évaluation : </td>
                         <td>
 <%
-                        out.println("<select id=\"typeEvaluation\">");
+                        out.println("<select name=\"typeEvaluation\">");
                         out.println("<option selected=\"selected\">générale</option>");
                         //source de : http://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript 
                         Class.forName("com.mysql.jdbc.Driver");
@@ -114,7 +114,7 @@
 %>                
                     </tr>
                     <tr>
-                        <td><input type="submit" value="Soumettre évaluation"/></td>
+                        <td><input type="hidden" name="ISBN" value="<%= ISBN %>"/><input type="submit" value="Soumettre évaluation"/></td>
                     </tr>
                 </table>
             </form>

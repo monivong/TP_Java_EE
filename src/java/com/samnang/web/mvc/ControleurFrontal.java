@@ -25,7 +25,7 @@ public class ControleurFrontal extends HttpServlet {
             if("chercherUnCours".equals(action)) {
                 this.getServletContext().getRequestDispatcher("/findACourse").forward(request, response);
             }
-            if("soumettreUneEvaluation".equals(action)) {
+            if( "soumettreUneEvaluation".equals(action) ) {
                 this.getServletContext().getRequestDispatcher("/submitEvaluation").forward(request, response);
             }
             if("rechercherParISBN".equals(action)) {

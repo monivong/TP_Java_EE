@@ -18,8 +18,8 @@ public class EvaluationDao extends Dao<Evaluation> {
 
     @Override
     public boolean create(Evaluation x) {
-        String req =    "INSERT INTO user (`id` , `idProf`, `idLivre`, `note`, `commentaire`) " + 
-                        "VALUES ('" + x.getId() + "','" + x.getIdProf() + "','" + x.getIdLivre() + "','" +x.getNote() + "','" + x.getCommentaire() + "')";
+        String req =    "INSERT INTO evaluation (`idProf`, `idLivre`, `note`, `commentaire`) " + 
+                        "VALUES ('" +  x.getIdProf() + "','" + x.getIdLivre() + "', " + x.getNote() + ",'" + x.getCommentaire() + "')";
         Statement stm = null;
         try {
             stm = cnx.createStatement();
@@ -106,9 +106,9 @@ public class EvaluationDao extends Dao<Evaluation> {
     public boolean update(Evaluation x) {
         Statement stm = null;
         try {
-            String req =    "UPDATE user SET idProf = '" + x.getIdProf() + "', idLibre = '" + x.getIdLivre() + 
-                            "', note = '" + x.getNote() + "', commentaire = '" + x.getCommentaire() +
-                            " WHERE id = '" + x.getId() + "'";
+            String req =    "UPDATE evaluation SET idProf = '" + x.getIdProf() + "', idLibre = '" + x.getIdLivre() + 
+                            "', note = " + x.getNote() + ", commentaire = '" + x.getCommentaire() +
+                            " WHERE id = " + x.getId() + "";
             stm = cnx.createStatement();
             int n = stm.executeUpdate(req);
             if (n > 0) {
