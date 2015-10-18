@@ -1,3 +1,4 @@
+<%@page import="com.samnang.jdbc.dao.implementation.EvaluationDao"%>
 <%@page import="com.samnang.entites.Cours"%>
 <%@page import="com.samnang.jdbc.dao.implementation.CoursDao"%>
 <%@page import="java.io.PrintWriter"%>
@@ -8,6 +9,7 @@
 <%@page import="java.util.LinkedList"%>
 <div>
     <h1>Évaluer un livre</h1>
+    <hr />
     <% if(request.getAttribute("message") != null ) out.println("<h3>" + request.getAttribute("message") + "</h3>"); %>
     <div id="informationsDuLivre">
 <%    
@@ -37,7 +39,12 @@
                 </tr>
                 <tr>
                     <th>Nombre d'évaluation générale : </th>
-                    <td><%= "À faire" %></td>
+<%                    
+                    Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
+                    Connexion.setUrl( request.getServletContext().getInitParameter("dtabaseURL") );
+                    EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() );
+                    out.println("<td>" + uneEvaluationDao.readNumberOfGeneralEvaluationById( unLivre.getISBN() ) + "</td>");
+%>                
                 </tr>
                 <tr>
                     <th>Note moyenne : </th>
@@ -118,8 +125,7 @@
                     </tr>
                 </table>
             </form>
-        </div><!-- Fin div id=evaluation -->
-        <a href="./index.jsp">Retourner à la page d'accueil</a>
+        </div><!-- Fin div id=evaluation -->        
         <script type="text/css">
             #informationsDuLivre {
                 float : left;
@@ -141,7 +147,7 @@
             out.println("<th>ISBN</th>");
             out.println("<th>Auteur(s)</th>");
             out.println("<th>Titre</th>");
-            out.println("<th>Nombre d'évaluation reçu</th>");
+            out.println("<th>Nombre d'évaluation générale reçu</th>");
             out.println("<th>Note moyenne des évaluations</th>");
             out.println("</tr>");
             for(int i=0; i < uneListeDeLivres.size(); i++) {
@@ -149,15 +155,19 @@
                 out.println("<td>" + uneListeDeLivres.get(i).getISBN() + "</td>");
                 out.println("<td>" + uneListeDeLivres.get(i).getNomAuteur() + "</td>");
                 out.println("<td>" + uneListeDeLivres.get(i).getTitre() + "</td>");
-                out.println("<td></td>");
-                out.println("<td></td>");
+                Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
+                Connexion.setUrl( request.getServletContext().getInitParameter("dtabaseURL") );
+                EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() );
+                out.println("<td>" + uneEvaluationDao.readNumberOfGeneralEvaluationById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
+                out.println("<td>À Faire</td>");
                 out.println("<td><a href=\"./evaluerUnLivre.jsp?livreAEvaluer="+ uneListeDeLivres.get(i).getISBN() + "\">Évaluer ce livre</a></td>");
                 out.println("</tr>");
             }
             out.println("</table>");
         } else {
             cout.println("<h3>Erreur de lecture dans la BD !!</h3>");
-        }
+        }        
     }   
-%>       
+%>      
+    <a href="./index.jsp">Retourner à la page d'accueil</a>
 </div>

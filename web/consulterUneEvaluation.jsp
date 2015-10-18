@@ -3,6 +3,7 @@
 <%@page import="com.samnang.entites.Livre"%>
 <div>
     <h1>Consulter une évaluation</h1>
+    <hr />
 <%
         if( request.getAttribute("message") != null ) {
             out.println("<h3>" + request.getAttribute("message") + "</h3>");
@@ -70,10 +71,7 @@
             </table>
 <%        
         }
-%>
-    <br />
-    <hr />
-    <br />
+%>    
     <form>
         <table border="1px solid black">
             <tr>

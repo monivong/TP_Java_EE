@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
         }
         return false;
     }
-
+// R E A D
     @Override
     public EvaluationCours read(String id) {        
         PreparedStatement stm = null;
@@ -103,7 +104,40 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
         }
         return null;
     }
-
+    public List<EvaluationCours> readBooksListByCourseNumber(String idCours) {
+        PreparedStatement stm = null;
+        List<EvaluationCours> listeDesLivresEvalues = new ArrayList<EvaluationCours>();
+        try {
+            stm = cnx.prepareStatement("SELECT * FROM evaluationcours WHERE idCours = ? ORDER BY note DESC");
+            stm.setString(1,idCours);
+            ResultSet r = stm.executeQuery();
+            while(r.next()) {
+                EvaluationCours c = new EvaluationCours();
+                c.setId(r.getInt("id"));
+                c.setIdLivre(r.getString("idLivre"));
+                c.setIdProf(r.getString("idProf"));
+                c.setIdCours(r.getString("idCours"));
+                c.setNote(r.getInt("note"));
+                c.setCommentaire(r.getString("commentaire"));                                
+                listeDesLivresEvalues.add( c );
+            }
+            r.close();
+            stm.close();
+            return listeDesLivresEvalues;
+        } catch (SQLException exp) {
+			
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {            
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+// U P D A T E
     @Override
     public boolean update(EvaluationCours x) {
         Statement stm = null;

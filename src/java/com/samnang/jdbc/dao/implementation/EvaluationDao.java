@@ -101,7 +101,32 @@ public class EvaluationDao extends Dao<Evaluation> {
         }
         return null;
     }
-
+    public int readNumberOfGeneralEvaluationById(String ISBN) {
+        PreparedStatement stm = null;
+        try {
+            stm = cnx.prepareStatement("SELECT COUNT(*) FROM evaluation WHERE idLivre = ?");
+            stm.setString(1,ISBN);
+            ResultSet r = stm.executeQuery();
+            if (r.next()) {
+                int n = r.getInt("COUNT(*)");                
+                r.close();
+                stm.close();
+                return n;
+            }
+        } catch (SQLException exp) {
+			
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {            
+                    e.printStackTrace();
+                }
+            }
+        }
+        return 0;
+    }
+// U P D A T E
     @Override
     public boolean update(Evaluation x) {
         Statement stm = null;

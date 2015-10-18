@@ -40,6 +40,9 @@ public class ControleurFrontal extends HttpServlet {
             if("rechercherParMotsCles".equals(action)) {
                 this.getServletContext().getRequestDispatcher("/findByKeyword").forward(request, response);
             }
+            if( "consulterLaListeDesCours".equals(action) ) {
+                request.getServletContext().getRequestDispatcher("/showCoursesList").forward(request, response);
+            }
         } else {
             request.setAttribute("message", "ControleurFrontal : « Je n'ai rien reçu... »");
             this.getServletContext().getRequestDispatcher("/index.jsp");

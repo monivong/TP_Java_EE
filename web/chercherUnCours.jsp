@@ -5,6 +5,7 @@
 <%@page import="com.samnang.jdbc.Connexion"%>
 <div>
     <h1>Chercher un cours</h1>
+    <hr />
 <%
     if( request.getParameter("action") != null && !request.getParameter("action").equalsIgnoreCase("login") ) {
         String numeroCours = request.getParameter("action");

@@ -4,6 +4,8 @@
         <jsp:forward page="login.jsp"/>
 <%
     }
+    if( request.getAttribute("message") != null )
+        request.removeAttribute("message");
 %>
 <%@page import="java.util.List"%>
 <%@page import="com.samnang.jdbc.dao.implementation.CoursDao"%>
@@ -41,10 +43,10 @@
             </ul>
             --%>
             <nav>
-                <a href="#ongletEvaluerUnLivre">Évaluer un livre</a> |
+                <a href="./evaluerUnLivre.jsp">Évaluer un livre</a> |
                 <a href="./consulterUneEvaluation.jsp">Consulter une évaluation</a> |
-                <a href="#ongletConsulterLaListeDesCours">Consulter la liste des cours</a> |
-                <a href="#ongletChercherUnCours">Chercher un cours</a>
+                <a href="./consulterLaListeDesCours.jsp">Consulter la liste des cours</a> |
+                <a href="./chercherUnCours.jsp">Chercher un cours</a>
             </nav><!-- source de : http://www.w3schools.com/tags/tag_nav.asp -->
             <div id="ongletEvaluerUnLivre">
                 <jsp:include page="evaluerUnLivre.jsp"/>
