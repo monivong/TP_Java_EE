@@ -19,8 +19,8 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
 
     @Override
     public boolean create(EvaluationCours x) {
-        String req =    "INSERT INTO evaluationcours (`idLivre`, `idProf`, `idCours`, `note`, `commentaire`) " + 
-                        "VALUES ('" + x.getIdLivre() + "','" + x.getIdProf() + "','" + 
+        String req =    "INSERT INTO `evaluationcours` (`idLivre`, `idProf`, `idCours`, `note`, `commentaire`)" + 
+                        " VALUES ('" + x.getIdLivre() + "','" + x.getIdProf() + "','" + 
                                         x.getIdCours() +  "', " + x.getNote() + ",'" + x.getCommentaire() + "')";
         Statement stm = null;
         try {

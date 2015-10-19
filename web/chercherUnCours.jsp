@@ -25,12 +25,12 @@
         }
     } else {       
 %>    
-        <form action="./chercherUnCours.jsp" method="get">
+        <form>
             <table>
                 <tr>
                     <th>Saisissez le numéro du cours : </th>
                     <td>
-                        <input list="lesCoursExistant" name="numeroCours"/>
+                        <input list="lesCoursExistant" name="coursSelectionne"/>
                         <datalist id="lesCoursExistant">
 <%
                             Class.forName("com.mysql.jdbc.Driver");
@@ -43,11 +43,12 @@
                         </datalist><!-- source de : http://www.w3schools.com/tags/tag_datalist.asp -->
                     </td>
                     <input type="hidden" name="action" value="chercherUnCours"/>
-                    <td><input type="submit" value="Trouver"/></td>
+                    <td><input type="submit" value="Trouver" formaction="./controleurFrontal" formmethod="post"/></td>
                 </tr>
             </table>
         </form>
 <%
     }
 %>    
+    <a href="./index.jsp">Retourner à la page d'accueil</a>
 </div>

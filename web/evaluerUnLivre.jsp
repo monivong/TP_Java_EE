@@ -114,7 +114,7 @@
                         CoursDao unCoursDao = new CoursDao(Connexion.getInstance());
                         List<Cours> listeDesCours = unCoursDao.findAll();
                         for(int i=0; i <listeDesCours.size(); i++) {
-                            out.println("<option value=\""+ listeDesCours.get(i).getNumero() +"\">" + listeDesCours.get(i).getNumero() + " :: " + listeDesCours.get(i).getNom() + "</option>");
+                            out.println("<option value=\""+ listeDesCours.get(i).getNumero() +"\">" + listeDesCours.get(i).getNumero() + "</option>");
                         }
                         out.println("</select>");
                         out.println("</td>");

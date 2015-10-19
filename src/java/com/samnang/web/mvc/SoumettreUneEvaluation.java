@@ -62,8 +62,8 @@ public class SoumettreUneEvaluation extends HttpServlet {
                 uneEvaluationCours.setIdCours( typeEvaluation );
                 uneEvaluationCours.setNote( note );
                 uneEvaluationCours.setCommentaire( commentaire );
-                uneEvaluationCoursDao.create( uneEvaluationCours );
-                this.getServletContext().getRequestDispatcher("/evaluerUnLivre.jsp").forward(request, response);
+                if( uneEvaluationCoursDao.create( uneEvaluationCours ) )
+                    this.getServletContext().getRequestDispatcher("/evaluerUnLivre.jsp").forward(request, response);
             }    
         //} else {
         //    request.setAttribute("message", "Désolé, votre session a été expirée.");
