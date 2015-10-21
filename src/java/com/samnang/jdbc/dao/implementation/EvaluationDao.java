@@ -126,6 +126,31 @@ public class EvaluationDao extends Dao<Evaluation> {
         }
         return 0;
     }
+    public double readAverageNoteById(String ISBN) {        
+        PreparedStatement stm = null;
+        try {
+            stm = cnx.prepareStatement("SELECT AVG(note) FROM evaluation WHERE idLivre = ?");
+            stm.setString(1,ISBN);
+            ResultSet r = stm.executeQuery();
+            if (r.next()) {
+                double moyenne = r.getDouble("AVG(note)");
+                r.close();
+                stm.close();
+                return moyenne;
+            }
+        } catch (SQLException exp) {
+			
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {            
+                    e.printStackTrace();
+                }
+            }
+        }
+        return 0;
+    }
 // U P D A T E
     @Override
     public boolean update(Evaluation x) {

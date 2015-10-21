@@ -1,3 +1,5 @@
+<%@page import="com.samnang.jdbc.dao.implementation.EvaluationDao"%>
+<%@page import="com.samnang.jdbc.Connexion"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.samnang.entites.Livre"%>
@@ -25,7 +27,11 @@
                         out.println("<td>" + listeDesLivres.get(i).getNomAuteur() + "</td>");
                         out.println("<td>" + listeDesLivres.get(i).getTitre() + "</td>");
                         out.println("<td>" + listeDesLivres.get(i).getNbEvaluations() + "</td>");
-                        out.println("<td>" + "À FAIRE" + "</td>");            
+                        
+                        Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
+                        Connexion.setUrl( request.getServletContext().getInitParameter("databaseURL") );
+                        EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() ); 
+                        out.println("<td>" + uneEvaluationDao.readAverageNoteById( listeDesLivres.get(i).getISBN() ) + "</td>");            
                         out.println("</tr>");
                     }
 %>

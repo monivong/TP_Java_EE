@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <th>Note moyenne : </th>
-                    <td><%= "À faire" %></td>
+                    <td><%= uneEvaluationDao.readAverageNoteById( unLivre.getISBN() ) %></td>                   
                 </tr>
                 <tr>
                     <th>Maison d'édition : </th>
@@ -114,7 +114,7 @@
                         CoursDao unCoursDao = new CoursDao(Connexion.getInstance());
                         List<Cours> listeDesCours = unCoursDao.findAll();
                         for(int i=0; i <listeDesCours.size(); i++) {
-                            out.println("<option value=\""+ listeDesCours.get(i).getNumero() +"\">" + listeDesCours.get(i).getNumero() + "</option>");
+                            out.println("<option value=\""+ listeDesCours.get(i).getNumero() +"\">" + listeDesCours.get(i).getNumero() + " :: " + listeDesCours.get(i).getNom() + "</option>");
                         }
                         out.println("</select>");
                         out.println("</td>");
@@ -159,7 +159,7 @@
                 Connexion.setUrl( request.getServletContext().getInitParameter("dtabaseURL") );
                 EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() );
                 out.println("<td>" + uneEvaluationDao.readNumberOfGeneralEvaluationById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
-                out.println("<td>À Faire</td>");
+                out.println("<td>" + uneEvaluationDao.readAverageNoteById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
                 out.println("<td><a href=\"./evaluerUnLivre.jsp?livreAEvaluer="+ uneListeDeLivres.get(i).getISBN() + "\">Évaluer ce livre</a></td>");
                 out.println("</tr>");
             }
