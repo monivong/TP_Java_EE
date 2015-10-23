@@ -62,8 +62,14 @@
                     out.println("<td>" + unLivre.getISBN() + "</td>");
                     out.println("<td>" + unLivre.getNomAuteur() + "</td>");
                     out.println("<td>" + unLivre.getTitre() + "</td>");
-                    out.println("<td>" + unLivre.getNbEvaluations() + "</td>");
-                    out.println("<td>" + "À FAIRE" + "</td>");
+                    
+                    Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
+                    Connexion.setUrl( request.getServletContext().getInitParameter("dtabaseURL") );
+                    EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() );
+                    out.println("<td>" + uneEvaluationDao.readNumberOfGeneralEvaluationById( unLivre.getISBN() ) + "</td>");
+                    //out.println("<td>" + unLivre.getNbEvaluations() + "</td>");
+                    
+                    out.println("<td>" + uneEvaluationDao.readAverageNoteById( unLivre.getISBN() ) + "</td>");                    
                     out.println("<td>" + unLivre.getEdition() + "</td>");
                     out.println("<td>" + unLivre.getAnnee() + "</td>");
                     out.println("<td>" + unLivre.getMotsCles() + "</td>");

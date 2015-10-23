@@ -10,7 +10,7 @@
 <div>
     <h1>Évaluer un livre</h1>
     <hr />
-    <% if(request.getAttribute("message") != null ) out.println("<h3>" + request.getAttribute("message") + "</h3>"); %>
+    <%-- if(request.getAttribute("message") != null ) out.println("<h3>" + request.getAttribute("message") + "</h3>"); --%>
     <div id="informationsDuLivre">
 <%    
     if( request.getParameter("action") != null && request.getParameter("action").equalsIgnoreCase("liste") ) {
