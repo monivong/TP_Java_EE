@@ -1,11 +1,11 @@
-<%@page import="com.samnang.entites.Livre"%>
-<%@page import="com.samnang.jdbc.dao.implementation.LivreDao"%>
+<%@page import="com.projet.entites.Livre"%>
+<%@page import="com.projet.jdbc.dao.implementation.LivreDao"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.samnang.entites.EvaluationCours"%>
+<%@page import="com.projet.entites.EvaluationCours"%>
 <%@page import="java.util.List"%>
-<%@page import="com.samnang.entites.Cours"%>
-<%@page import="com.samnang.jdbc.dao.implementation.CoursDao"%>
-<%@page import="com.samnang.jdbc.Connexion"%>
+<%@page import="com.projet.entites.Cours"%>
+<%@page import="com.projet.jdbc.dao.implementation.CoursDao"%>
+<%@page import="com.projet.jdbc.Connexion"%>
 <div>
     <h1>Consulter la liste des cours</h1>
     <hr />

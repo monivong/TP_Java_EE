@@ -1,8 +1,8 @@
 <%@page import="java.util.List"%>
-<%@page import="com.samnang.jdbc.dao.implementation.EvaluationCoursDao"%>
-<%@page import="com.samnang.entites.Cours"%>
-<%@page import="com.samnang.jdbc.dao.implementation.CoursDao"%>
-<%@page import="com.samnang.jdbc.Connexion"%>
+<%@page import="com.projet.jdbc.dao.implementation.EvaluationCoursDao"%>
+<%@page import="com.projet.entites.Cours"%>
+<%@page import="com.projet.jdbc.dao.implementation.CoursDao"%>
+<%@page import="com.projet.jdbc.Connexion"%>
 <div>
     <h1>Chercher un cours</h1>
     <hr />

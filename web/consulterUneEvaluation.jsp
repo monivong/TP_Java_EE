@@ -1,8 +1,8 @@
-<%@page import="com.samnang.jdbc.dao.implementation.EvaluationDao"%>
-<%@page import="com.samnang.jdbc.Connexion"%>
+<%@page import="com.projet.jdbc.dao.implementation.EvaluationDao"%>
+<%@page import="com.projet.jdbc.Connexion"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page import="com.samnang.entites.Livre"%>
+<%@page import="com.projet.entites.Livre"%>
 <div>
     <h1>Consulter une évaluation</h1>
     <hr />
