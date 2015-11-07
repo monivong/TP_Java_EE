@@ -1,8 +1,8 @@
-package com.samnang.web.mvc;
+package com.projet.web.mvc;
 
-import com.samnang.entites.Livre;
-import com.samnang.jdbc.Connexion;
-import com.samnang.jdbc.dao.implementation.LivreDao;
+import com.projet.entites.EvaluationCours;
+import com.projet.jdbc.Connexion;
+import com.projet.jdbc.dao.implementation.EvaluationCoursDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -12,35 +12,31 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class RechercherParISBN extends HttpServlet {
+public class ConsulterLaListeDesCours extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            if( request.getAttribute("plusieursResultats") != null ) request.removeAttribute("plusieursResultats");
-            
-            String ISBN = request.getParameter("isbn");
-            if( ISBN==null || "".equals( ISBN.trim() ) ) {
-                request.setAttribute("message", "ERREUR ! L'ISBN est invalide.");
-                request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
-            } else {
+            String coursSelectionne = request.getParameter("coursSelectionne");
+            if( coursSelectionne != null ) {
                 try {
-                    Class.forName("com.mysql.jdbc.Driver");
+                    Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                }       
-                Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");                
-                LivreDao unLivreDao = new LivreDao( Connexion.getInstance() );
-                Livre unLivre = unLivreDao.readByISBN( ISBN );
-                if( unLivre == null ) {
-                    request.setAttribute("message", "ERREUR ! Il n'existe aucun livre avec l'ISBN { " + ISBN +" }");
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("unResultat", unLivre);
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    Logger.getLogger(ConsulterLaListeDesCours.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }            
+                Connexion.setUrl( request.getServletContext().getInitParameter("databaseURL") );
+                EvaluationCoursDao uneEvaluationCoursDao = new EvaluationCoursDao( Connexion.getInstance() );
+
+                List<EvaluationCours> listeDesLivresEvalues = uneEvaluationCoursDao.readBooksListByCourseNumber( coursSelectionne );
+                HttpSession objetSession = request.getSession(true);
+                objetSession.setAttribute("listeDesLivresEvalues", listeDesLivresEvalues);
+                request.getServletContext().getRequestDispatcher("/consulterLaListeDesCours.jsp").forward(request, response);
+            } else {
+                request.setAttribute("message", "Erreur ! Le cours sélectionné est invalide.");
+                request.getServletContext().getRequestDispatcher("/consulterLaListeDesCours.jsp").forward(request, response);
+            }
         }
     }
 

@@ -1,8 +1,8 @@
-package com.samnang.web.mvc;
+package com.projet.web.mvc;
 
-import com.samnang.entites.Livre;
-import com.samnang.jdbc.Connexion;
-import com.samnang.jdbc.dao.implementation.LivreDao;
+import com.projet.entites.Livre;
+import com.projet.jdbc.Connexion;
+import com.projet.jdbc.dao.implementation.LivreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;

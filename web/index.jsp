@@ -18,8 +18,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">                    
         <title>index.jsp</title>
-        <script type="text/javascript" src="./script/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="./script/jquery-ui.js"></script>        
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.js"></script>        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script><!-- source de https://developers.google.com/speed/libraries/ -->
         <link rel="stylesheet" type="text/css" href="\script\styles.css">        
         <script type="text/css">

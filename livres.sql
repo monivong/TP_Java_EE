@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.5
+-- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
--- Serveur: 127.0.0.1
--- Généré le : Jeu 06 Décembre 2012 à 22:57
--- Version du serveur: 5.1.49
--- Version de PHP: 5.3.3
+-- Host: localhost
+-- Generation Time: Nov 07, 2015 at 06:45 PM
+-- Server version: 5.6.20-log
+-- PHP Version: 5.4.31
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,24 +17,23 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `livres`
+-- Database: `livres`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `cours`
+-- Table structure for table `cours`
 --
 
 CREATE TABLE IF NOT EXISTS `cours` (
   `numero` varchar(15) NOT NULL,
   `nom` varchar(50) NOT NULL,
-  `duree` int(11) NOT NULL,
-  PRIMARY KEY (`numero`)
+  `duree` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `cours`
+-- Dumping data for table `cours`
 --
 
 INSERT INTO `cours` (`numero`, `nom`, `duree`) VALUES
@@ -47,20 +47,19 @@ INSERT INTO `cours` (`numero`, `nom`, `duree`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `evaluation`
+-- Table structure for table `evaluation`
 --
 
 CREATE TABLE IF NOT EXISTS `evaluation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `idProf` varchar(20) NOT NULL,
   `idLivre` varchar(20) NOT NULL,
   `note` tinyint(4) NOT NULL,
-  `commentaire` text NOT NULL,
-  PRIMARY KEY (`id`)
+  `commentaire` text NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
--- Contenu de la table `evaluation`
+-- Dumping data for table `evaluation`
 --
 
 INSERT INTO `evaluation` (`id`, `idProf`, `idLivre`, `note`, `commentaire`) VALUES
@@ -72,21 +71,20 @@ INSERT INTO `evaluation` (`id`, `idProf`, `idLivre`, `note`, `commentaire`) VALU
 -- --------------------------------------------------------
 
 --
--- Structure de la table `evaluationcours`
+-- Table structure for table `evaluationcours`
 --
 
 CREATE TABLE IF NOT EXISTS `evaluationcours` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `idLivre` varchar(20) NOT NULL,
   `idProf` varchar(20) NOT NULL,
   `idCours` varchar(15) NOT NULL,
   `note` tinyint(4) NOT NULL,
-  `commentaire` tinytext NOT NULL,
-  PRIMARY KEY (`id`)
+  `commentaire` tinytext NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Contenu de la table `evaluationcours`
+-- Dumping data for table `evaluationcours`
 --
 
 INSERT INTO `evaluationcours` (`id`, `idLivre`, `idProf`, `idCours`, `note`, `commentaire`) VALUES
@@ -96,7 +94,7 @@ INSERT INTO `evaluationcours` (`id`, `idLivre`, `idProf`, `idCours`, `note`, `co
 -- --------------------------------------------------------
 
 --
--- Structure de la table `livre`
+-- Table structure for table `livre`
 --
 
 CREATE TABLE IF NOT EXISTS `livre` (
@@ -110,13 +108,11 @@ CREATE TABLE IF NOT EXISTS `livre` (
   `Description` text NOT NULL,
   `NbPages` int(11) NOT NULL,
   `note` double DEFAULT NULL,
-  `nbEvaluations` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ISBN`),
-  KEY `NumAuteur` (`NomAuteur`)
+  `nbEvaluations` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Informations sur les livres';
 
 --
--- Contenu de la table `livre`
+-- Dumping data for table `livre`
 --
 
 INSERT INTO `livre` (`ISBN`, `Titre`, `Edition`, `Annee`, `MotsCles`, `NomAuteur`, `etat`, `Description`, `NbPages`, `note`, `nbEvaluations`) VALUES
@@ -133,18 +129,17 @@ INSERT INTO `livre` (`ISBN`, `Titre`, `Edition`, `Annee`, `MotsCles`, `NomAuteur
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(20) NOT NULL,
   `nom_prenom` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  PRIMARY KEY (`username`)
+  `password` varchar(30) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`username`, `nom_prenom`, `password`) VALUES
@@ -152,4 +147,58 @@ INSERT INTO `user` (`username`, `nom_prenom`, `password`) VALUES
 ('sduvet', 'Sylvie Duvet', 'duvet'),
 ('alapointe', 'Ali Lapointe', 'lapointe'),
 ('jmarois', 'Jean Marois', 'marois'),
-('pcharest', 'Pauline Charest', 'charest');
+('pcharest', 'Pauline Charest', 'charest'),
+('samnang', 'suon_samnang', 'suon'),
+('alex', 'caumartin_alex', 'caumartin');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `cours`
+--
+ALTER TABLE `cours`
+ ADD PRIMARY KEY (`numero`);
+
+--
+-- Indexes for table `evaluation`
+--
+ALTER TABLE `evaluation`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `evaluationcours`
+--
+ALTER TABLE `evaluationcours`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `livre`
+--
+ALTER TABLE `livre`
+ ADD PRIMARY KEY (`ISBN`), ADD KEY `NumAuteur` (`NomAuteur`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `evaluation`
+--
+ALTER TABLE `evaluation`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `evaluationcours`
+--
+ALTER TABLE `evaluationcours`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

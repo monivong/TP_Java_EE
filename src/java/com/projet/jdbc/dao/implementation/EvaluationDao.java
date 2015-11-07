@@ -1,27 +1,25 @@
-package com.samnang.jdbc.dao.implementation;
+package com.projet.jdbc.dao.implementation;
 
-import com.samnang.entites.EvaluationCours;
-import com.samnang.jdbc.dao.Dao;
+import com.projet.entites.Evaluation;
+import com.projet.jdbc.dao.Dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EvaluationCoursDao extends Dao<EvaluationCours> {
+public class EvaluationDao extends Dao<Evaluation> {
 
-    public EvaluationCoursDao(Connection c) {
+    public EvaluationDao(Connection c) {
         super(c);
     }
 
     @Override
-    public boolean create(EvaluationCours x) {
-        String req =    "INSERT INTO `evaluationcours` (`idLivre`, `idProf`, `idCours`, `note`, `commentaire`)" + 
-                        " VALUES ('" + x.getIdLivre() + "','" + x.getIdProf() + "','" + 
-                                        x.getIdCours() +  "', " + x.getNote() + ",'" + x.getCommentaire() + "')";
+    public boolean create(Evaluation x) {
+        String req =    "INSERT INTO evaluation (`idProf`, `idLivre`, `note`, `commentaire`) " + 
+                        "VALUES ('" +  x.getIdProf() + "','" + x.getIdLivre() + "', " + x.getNote() + ",'" + x.getCommentaire() + "')";
         Statement stm = null;
         try {
             stm = cnx.createStatement();
@@ -45,18 +43,18 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
     }
 
     @Override
-    public boolean delete(EvaluationCours x) {        
+    public boolean delete(Evaluation x) {        
         Statement stm = null;
         try {
             stm = cnx.createStatement();
-            int n = stm.executeUpdate("DELETE FROM evaluationcours WHERE id = '" + x.getId() + "'");
+            int n = stm.executeUpdate("DELETE FROM evaluation WHERE id='" + x.getId() + "'");
             if (n > 0) {
                 stm.close();
                 return true;
             }
         } catch (SQLException exp) {
         
-		} finally {
+        } finally {
             if (stm != null) {
                 try {
                     stm.close();
@@ -67,24 +65,23 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
         }
         return false;
     }
-// R E A D
+
     @Override
-    public EvaluationCours read(String id) {        
+    public Evaluation read(String id) {        
         PreparedStatement stm = null;
         try {
-			//Statement stm = cnx.createStatement();
-			//ResultSet r = stm.executeQuery("SELECT * FROM user WHERE numId = '" + id + "'");
+            //Statement stm = cnx.createStatement();
+            //ResultSet r = stm.executeQuery("SELECT * FROM user WHERE numId = '" + id + "'");
             //Avec requête paramétrée :
-            stm = cnx.prepareStatement("SELECT * FROM evaluationcours WHERE id = ?");
+            stm = cnx.prepareStatement("SELECT * FROM evaluation WHERE id = ?");
             stm.setString(1,id);
             ResultSet r = stm.executeQuery();
             if (r.next()) {
                 //User c = new User(r.getString("numId"),r.getString("mdp"));
-                EvaluationCours c = new EvaluationCours();
+                Evaluation c = new Evaluation();
                 c.setId(r.getInt("id"));
-                c.setIdLivre(r.getString("idLivre"));
                 c.setIdProf(r.getString("idProf"));
-                c.setIdCours(r.getString("idCours"));
+                c.setIdLivre(r.getString("idLibre"));
                 c.setNote(r.getInt("note"));
                 c.setCommentaire(r.getString("commentaire"));
                 r.close();
@@ -104,26 +101,18 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
         }
         return null;
     }
-    public List<EvaluationCours> readBooksListByCourseNumber(String idCours) {
+    public int readNumberOfGeneralEvaluationById(String ISBN) {
         PreparedStatement stm = null;
-        List<EvaluationCours> listeDesLivresEvalues = new ArrayList<EvaluationCours>();
         try {
-            stm = cnx.prepareStatement("SELECT * FROM evaluationcours WHERE idCours = ? ORDER BY note DESC");
-            stm.setString(1,idCours);
+            stm = cnx.prepareStatement("SELECT COUNT(*) FROM evaluation WHERE idLivre = ?");
+            stm.setString(1,ISBN);
             ResultSet r = stm.executeQuery();
-            while(r.next()) {
-                EvaluationCours c = new EvaluationCours();
-                c.setId(r.getInt("id"));
-                c.setIdLivre(r.getString("idLivre"));
-                c.setIdProf(r.getString("idProf"));
-                c.setIdCours(r.getString("idCours"));
-                c.setNote(r.getInt("note"));
-                c.setCommentaire(r.getString("commentaire"));                                
-                listeDesLivresEvalues.add( c );
+            if (r.next()) {
+                int n = r.getInt("COUNT(*)");                
+                r.close();
+                stm.close();
+                return n;
             }
-            r.close();
-            stm.close();
-            return listeDesLivresEvalues;
         } catch (SQLException exp) {
 			
         } finally {
@@ -135,17 +124,41 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
                 }
             }
         }
-        return null;
+        return 0;
+    }
+    public double readAverageNoteById(String ISBN) {        
+        PreparedStatement stm = null;
+        try {
+            stm = cnx.prepareStatement("SELECT AVG(note) FROM evaluation WHERE idLivre = ?");
+            stm.setString(1,ISBN);
+            ResultSet r = stm.executeQuery();
+            if (r.next()) {
+                double moyenne = r.getDouble("AVG(note)");
+                r.close();
+                stm.close();
+                return moyenne;
+            }
+        } catch (SQLException exp) {
+			
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {            
+                    e.printStackTrace();
+                }
+            }
+        }
+        return 0;
     }
 // U P D A T E
     @Override
-    public boolean update(EvaluationCours x) {
+    public boolean update(Evaluation x) {
         Statement stm = null;
         try {
-            String req =    "UPDATE evaluationcours SET idLivre = '" + x.getIdLivre() + "', idProf = '" + x.getIdProf() + 
-                                                    "', idCours = '" + x.getIdCours() + "', note = " + x.getNote() + 
-                                                    ", commentaire = '" + x.getCommentaire() +
-                            " WHERE id = '" + x.getId() + "'";
+            String req =    "UPDATE evaluation SET idProf = '" + x.getIdProf() + "', idLibre = '" + x.getIdLivre() + 
+                            "', note = " + x.getNote() + ", commentaire = '" + x.getCommentaire() +
+                            " WHERE id = " + x.getId() + "";
             stm = cnx.createStatement();
             int n = stm.executeUpdate(req);
             if (n > 0) {
@@ -167,14 +180,13 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
     }
 
     @Override
-    public List<EvaluationCours> findAll() {
-        List<EvaluationCours> liste = new LinkedList<EvaluationCours>();
+    public List<Evaluation> findAll() {
+        List<Evaluation> liste = new LinkedList<Evaluation>();
         try {
             Statement stm = cnx.createStatement();
-            ResultSet r = stm.executeQuery("SELECT * FROM evaluationcours");
+            ResultSet r = stm.executeQuery("SELECT * FROM evaluation");
             while (r.next()) {
-                EvaluationCours c = new EvaluationCours(r.getInt("id"), r.getString("idLivre"), r.getString("idProf"),
-                                                        r.getString("idCours"), r.getInt("note"), r.getString("commentaire"));
+                Evaluation c = new Evaluation(r.getInt("id"), r.getString("idProf"), r.getString("idLivre"), r.getInt("note"), r.getString("commentaire"));
                 liste.add(c);
             }
             r.close();

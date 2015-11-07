@@ -1,8 +1,8 @@
-package com.samnang.web.mvc;
+package com.projet.web.mvc;
 
-import com.samnang.entites.User;
-import com.samnang.jdbc.Connexion;
-import com.samnang.jdbc.dao.implementation.UserDao;
+import com.projet.entites.User;
+import com.projet.jdbc.Connexion;
+import com.projet.jdbc.dao.implementation.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;

@@ -1,7 +1,7 @@
-package com.samnang.jdbc.dao.implementation;
+package com.projet.jdbc.dao.implementation;
 
-import com.samnang.entites.Cours;
-import com.samnang.jdbc.dao.Dao;
+import com.projet.entites.User;
+import com.projet.jdbc.dao.Dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,16 +10,16 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CoursDao extends Dao<Cours> {
-    
-    public CoursDao(Connection c) {
+public class UserDao extends Dao<User> {
+
+    public UserDao(Connection c) {
         super(c);
     }
 
     @Override
-    public boolean create(Cours x) {
-        String req =    "INSERT INTO cours (`numero` , `nom`, `duree`) " + 
-                        "VALUES ('" + x.getNumero() + "','" + x.getNom() + "','" + x.getDuree() + "')";
+    public boolean create(User x) {
+        String req =    "INSERT INTO user (`username` , `nom_prenom`, `password`) " + 
+                        "VALUES ('" + x.getUsername() + "','" + x.getNom_prenom() + "','" + x.getPassword() + "')";
         Statement stm = null;
         try {
             stm = cnx.createStatement();
@@ -43,18 +43,18 @@ public class CoursDao extends Dao<Cours> {
     }
 
     @Override
-    public boolean delete(Cours x) {        
+    public boolean delete(User x) {        
         Statement stm = null;
         try {
             stm = cnx.createStatement();
-            int n = stm.executeUpdate("DELETE FROM cours WHERE numero='" + x.getNumero()+ "'");
+            int n = stm.executeUpdate("DELETE FROM user WHERE username = '" + x.getUsername() + "'");
             if (n > 0) {
                 stm.close();
                 return true;
             }
         } catch (SQLException exp) {
         
-		} finally {
+        } finally {
             if (stm != null) {
                 try {
                     stm.close();
@@ -67,21 +67,21 @@ public class CoursDao extends Dao<Cours> {
     }
 
     @Override
-    public Cours read(String numero) {        
+    public User read(String username) {        
         PreparedStatement stm = null;
         try {
-			//Statement stm = cnx.createStatement();
-			//ResultSet r = stm.executeQuery("SELECT * FROM user WHERE numId = '" + id + "'");
+            //Statement stm = cnx.createStatement();
+            //ResultSet r = stm.executeQuery("SELECT * FROM user WHERE numId = '" + id + "'");
             //Avec requête paramétrée :
-            stm = cnx.prepareStatement("SELECT * FROM cours WHERE numero = ?");
-            stm.setString(1,numero);
+            stm = cnx.prepareStatement("SELECT * FROM user WHERE username = ?");
+            stm.setString(1,username);
             ResultSet r = stm.executeQuery();
             if (r.next()) {
                 //User c = new User(r.getString("numId"),r.getString("mdp"));
-                Cours c = new Cours();
-                c.setNumero(r.getString("numero"));
-                c.setNom(r.getString("nom"));
-                c.setDuree(r.getInt("duree"));
+                User c = new User();
+                c.setUsername(r.getString("username"));
+                c.setNom_prenom(r.getString("nom_prenom"));
+                c.setPassword(r.getString("password"));
                 r.close();
                 stm.close();
                 return c;
@@ -101,11 +101,11 @@ public class CoursDao extends Dao<Cours> {
     }
 
     @Override
-    public boolean update(Cours x) {
+    public boolean update(User x) {
         Statement stm = null;
         try {
-            String req =    "UPDATE cours SET nom = '" + x.getNom() + "', duree = '" + x.getDuree() + "'" +
-                            " WHERE numero = '" + x.getNumero() + "'";
+            String req = "UPDATE user SET nom_prenom = '" + x.getNom_prenom() + "', password = '" + x.getPassword() + "'" + 
+                        " WHERE username = '" + x.getUsername() + "'";
             stm = cnx.createStatement();
             int n = stm.executeUpdate(req);
             if (n > 0) {
@@ -127,13 +127,13 @@ public class CoursDao extends Dao<Cours> {
     }
 
     @Override
-    public List<Cours> findAll() {
-        List<Cours> liste = new LinkedList<Cours>();
+    public List<User> findAll() {
+        List<User> liste = new LinkedList<User>();
         try {
             Statement stm = cnx.createStatement();
-            ResultSet r = stm.executeQuery("SELECT * FROM cours");
+            ResultSet r = stm.executeQuery("SELECT * FROM user");
             while (r.next()) {
-                Cours c = new Cours(r.getString("numero"), r.getString("nom"), r.getInt("duree"));
+                User c = new User(r.getString("username"), r.getString("nom_prenom"), r.getString("password"));
                 liste.add(c);
             }
             r.close();

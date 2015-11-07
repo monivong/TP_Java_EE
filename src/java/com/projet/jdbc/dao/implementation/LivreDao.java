@@ -1,7 +1,7 @@
-package com.samnang.jdbc.dao.implementation;
+package com.projet.jdbc.dao.implementation;
 
-import com.samnang.entites.Livre;
-import com.samnang.jdbc.dao.Dao;
+import com.projet.entites.Livre;
+import com.projet.jdbc.dao.Dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

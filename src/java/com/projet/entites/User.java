@@ -1,4 +1,4 @@
-package com.samnang.entites;
+package com.projet.entites;
 
 public class User {
             // attribut(s)

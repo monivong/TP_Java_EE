@@ -1,8 +1,8 @@
-package com.samnang.web.mvc;
+package com.projet.web.mvc;
 
-import com.samnang.entites.Livre;
-import com.samnang.jdbc.Connexion;
-import com.samnang.jdbc.dao.implementation.LivreDao;
+import com.projet.entites.Livre;
+import com.projet.jdbc.Connexion;
+import com.projet.jdbc.dao.implementation.LivreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -13,16 +13,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RechercherParMotsClesDansTitre extends HttpServlet {
+public class RechercherParDescription extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             if( request.getAttribute("unResultat") != null ) request.removeAttribute("unResultat");
+            if( request.getAttribute("plusieursResultats") != null ) request.removeAttribute("plusieursResultats");
             
-            String keyword = request.getParameter("motsDansLeTitre");
-            if( keyword == null || "".equals( keyword.trim() ) ) {
-                request.setAttribute("message", "ERREUR ! Le mots dans le titre est invalide.");
+            String description = request.getParameter("description");
+            if( description == null || "".equals( request.getParameter( description.trim() ) ) || description.length() == 0 ) {
+                request.setAttribute("message", "ERREUR ! La description est invalide...");
                 request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
             } else {
                 try {
@@ -32,14 +33,14 @@ public class RechercherParMotsClesDansTitre extends HttpServlet {
                 }       
                 Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");                
                 LivreDao unLivreDao = new LivreDao( Connexion.getInstance() );
-                List<Livre> listeDesLivres = unLivreDao.readByKeywordInTitle(keyword);
+                List<Livre> listeDesLivres = unLivreDao.readByDescription(description);
                 if( listeDesLivres == null ) {
-                    request.setAttribute("message", "ERREUR ! Il n'existe aucun titre portant le mot { " + keyword +" }");
+                    request.setAttribute("message", "ERREUR ! Il n'existe aucun livre ayant comme description { " + description +" }");
                     request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
                 } else if( listeDesLivres.size() == 1 ) {
                     request.setAttribute("unResultat", listeDesLivres.get(0) );
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response); 
-                }else {
+                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                } else {
                     request.setAttribute("plusieursResultats", listeDesLivres);
                     request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
                 }

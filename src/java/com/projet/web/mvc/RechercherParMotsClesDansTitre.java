@@ -1,8 +1,8 @@
-package com.samnang.web.mvc;
+package com.projet.web.mvc;
 
-import com.samnang.entites.EvaluationCours;
-import com.samnang.jdbc.Connexion;
-import com.samnang.jdbc.dao.implementation.EvaluationCoursDao;
+import com.projet.entites.Livre;
+import com.projet.jdbc.Connexion;
+import com.projet.jdbc.dao.implementation.LivreDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -12,30 +12,37 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class ConsulterLaListeDesCours extends HttpServlet {
+public class RechercherParMotsClesDansTitre extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String coursSelectionne = request.getParameter("coursSelectionne");
-            if( coursSelectionne != null ) {
-                try {
-                    Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ConsulterLaListeDesCours.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                Connexion.setUrl( request.getServletContext().getInitParameter("databaseURL") );
-                EvaluationCoursDao uneEvaluationCoursDao = new EvaluationCoursDao( Connexion.getInstance() );
-
-                List<EvaluationCours> listeDesLivresEvalues = uneEvaluationCoursDao.readBooksListByCourseNumber( coursSelectionne );
-                HttpSession objetSession = request.getSession(true);
-                objetSession.setAttribute("listeDesLivresEvalues", listeDesLivresEvalues);
-                request.getServletContext().getRequestDispatcher("/consulterLaListeDesCours.jsp").forward(request, response);
+            if( request.getAttribute("unResultat") != null ) request.removeAttribute("unResultat");
+            
+            String keyword = request.getParameter("motsDansLeTitre");
+            if( keyword == null || "".equals( keyword.trim() ) ) {
+                request.setAttribute("message", "ERREUR ! Le mots dans le titre est invalide.");
+                request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
             } else {
-                request.setAttribute("message", "Erreur ! Le cours sélectionné est invalide.");
-                request.getServletContext().getRequestDispatcher("/consulterLaListeDesCours.jsp").forward(request, response);
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }       
+                Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");                
+                LivreDao unLivreDao = new LivreDao( Connexion.getInstance() );
+                List<Livre> listeDesLivres = unLivreDao.readByKeywordInTitle(keyword);
+                if( listeDesLivres == null ) {
+                    request.setAttribute("message", "ERREUR ! Il n'existe aucun titre portant le mot { " + keyword +" }");
+                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                } else if( listeDesLivres.size() == 1 ) {
+                    request.setAttribute("unResultat", listeDesLivres.get(0) );
+                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response); 
+                }else {
+                    request.setAttribute("plusieursResultats", listeDesLivres);
+                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.samnang.entites;
+package com.projet.entites;
 
 public class EvaluationCours extends Evaluation{
             // attribut(s)

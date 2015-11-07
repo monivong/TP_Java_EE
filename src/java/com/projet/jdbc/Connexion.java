@@ -1,4 +1,4 @@
-package com.samnang.jdbc;
+package com.projet.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

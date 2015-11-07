@@ -1,10 +1,10 @@
-package com.samnang.web.mvc;
+package com.projet.web.mvc;
 
-import com.samnang.entites.Evaluation;
-import com.samnang.entites.EvaluationCours;
-import com.samnang.jdbc.Connexion;
-import com.samnang.jdbc.dao.implementation.EvaluationCoursDao;
-import com.samnang.jdbc.dao.implementation.EvaluationDao;
+import com.projet.entites.Evaluation;
+import com.projet.entites.EvaluationCours;
+import com.projet.jdbc.Connexion;
+import com.projet.jdbc.dao.implementation.EvaluationCoursDao;
+import com.projet.jdbc.dao.implementation.EvaluationDao;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

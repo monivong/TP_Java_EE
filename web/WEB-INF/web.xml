@@ -12,27 +12,27 @@
     </context-param>
     <servlet>
         <servlet-name>ControleurFrontal</servlet-name>
-        <servlet-class>com.samnang.web.mvc.ControleurFrontal</servlet-class>
+        <servlet-class>com.projet.web.mvc.ControleurFrontal</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RechercherParISBN</servlet-name>
-        <servlet-class>com.samnang.web.mvc.RechercherParISBN</servlet-class>
+        <servlet-class>com.projet.web.mvc.RechercherParISBN</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RechercherParMotsClesDansTitre</servlet-name>
-        <servlet-class>com.samnang.web.mvc.RechercherParMotsClesDansTitre</servlet-class>
+        <servlet-class>com.projet.web.mvc.RechercherParMotsClesDansTitre</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RechercherParDescription</servlet-name>
-        <servlet-class>com.samnang.web.mvc.RechercherParDescription</servlet-class>
+        <servlet-class>com.projet.web.mvc.RechercherParDescription</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RechercherParMotsCles</servlet-name>
-        <servlet-class>com.samnang.web.mvc.RechercherParMotsCles</servlet-class>
+        <servlet-class>com.projet.web.mvc.RechercherParMotsCles</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ConsulterLaListeDesCours</servlet-name>
-        <servlet-class>com.samnang.web.mvc.ConsulterLaListeDesCours</servlet-class>
+        <servlet-class>com.projet.web.mvc.ConsulterLaListeDesCours</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ControleurFrontal</servlet-name>
@@ -40,7 +40,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>login</servlet-name>
-        <servlet-class>com.samnang.web.mvc.Login</servlet-class>
+        <servlet-class>com.projet.web.mvc.Login</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -48,7 +48,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>logout</servlet-name>
-        <servlet-class>com.samnang.web.mvc.Logout</servlet-class>
+        <servlet-class>com.projet.web.mvc.Logout</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
@@ -56,7 +56,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>soumettreUneEvaluation</servlet-name>
-        <servlet-class>com.samnang.web.mvc.SoumettreUneEvaluation</servlet-class>
+        <servlet-class>com.projet.web.mvc.SoumettreUneEvaluation</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>soumettreUneEvaluation</servlet-name>

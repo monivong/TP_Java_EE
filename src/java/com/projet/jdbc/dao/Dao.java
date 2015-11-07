@@ -1,4 +1,4 @@
-package com.samnang.jdbc.dao;
+package com.projet.jdbc.dao;
 
 import java.sql.Connection;
 import java.util.List;
