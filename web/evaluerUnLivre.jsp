@@ -1,3 +1,4 @@
+<%@page import="com.projet.entites.Evaluation"%>
 <%@page import="com.projet.jdbc.dao.implementation.EvaluationDao"%>
 <%@page import="com.projet.entites.Cours"%>
 <%@page import="com.projet.jdbc.dao.implementation.CoursDao"%>
@@ -7,9 +8,16 @@
 <%@page import="com.projet.jdbc.dao.implementation.LivreDao"%>
 <%@page import="com.projet.entites.Livre"%>
 <%@page import="java.util.LinkedList"%>
+<link rel="stylesheet" type="text/css" href="./js/styleForEvaluerUnLivre.css">
 <div>
     <h1>Évaluer un livre</h1>
     <hr />
+<%
+    if( request.getAttribute("success-message") != null)
+        out.println("<h3 id=\"success-message\">" + request.getAttribute("success-message").toString() + "</h3>");
+    else if( request.getAttribute("fail-message") != null )
+        out.println("<h3 id=\"fail-message\">" + request.getAttribute("fail-message").toString() + "</h3>");
+%>
     <%-- if(request.getAttribute("message") != null ) out.println("<h3>" + request.getAttribute("message") + "</h3>"); --%>
     <div id="informationsDuLivre">
 <%    
@@ -70,16 +78,24 @@
                     <th>Nombre de pages : </th>
                     <td><%= unLivre.getNbPages() %></td>
                 </tr>
-                <tr>
-                    <th>Notes des évaluations générales : </th>
-                    <td><%= unLivre.getNbEvaluations() %></td>
-                </tr>
-                <tr>
-                    <th>Commentaires : </th>
-                    <td><%= "À faire" %></td>
-                </tr>
-            </table>
-<%
+            </table>      
+            <hr />
+<%                                    
+            List<Evaluation> uneListeEvaluation = uneEvaluationDao.findAllCoupleNoteCommentaire( unLivre.getISBN() );
+            if( uneListeEvaluation.size() > 0 ) {
+                out.println("<table border=\"1px solid black\">");
+                out.println("<tr>");
+                out.println("<th>Notes des évaluations générales : </th>");
+                out.println("<th>Commentaires : </th>");
+                out.println("</tr>");
+                for(int i=0; i < uneListeEvaluation.size(); i++) {
+                    out.println("<tr>");
+                    out.println("<td>" + uneListeEvaluation.get(i).getNote() + "</td>");
+                    out.println("<td>" + uneListeEvaluation.get(i).getCommentaire() + "</td>");
+                    out.println("</tr>");
+                }
+                out.println("</table>");
+            }
         }
 %>
         </div><!-- Fin div id=informationDuLivre -->
@@ -121,7 +137,8 @@
 %>                
                     </tr>
                     <tr>
-                        <td><input type="hidden" name="ISBN" value="<%= ISBN %>"/><input type="submit" value="Soumettre évaluation"/></td>
+                        <td><input type="hidden" name="ISBN" value="<%= ISBN %>"/></td>
+                        <td><input type="submit" value="Soumettre évaluation"/></td>
                     </tr>
                 </table>
             </form>
@@ -144,7 +161,7 @@
         if( uneListeDeLivres != null ) {
             out.println("<table border=\"2px solid black\">");            
             out.println("<tr>");
-            out.println("<th>ISBN</th>");
+            out.println("<th id=\"colonneISBN\">ISBN</th>");
             out.println("<th>Auteur(s)</th>");
             out.println("<th>Titre</th>");
             out.println("<th>Nombre d'évaluation générale reçu</th>");
@@ -152,15 +169,15 @@
             out.println("</tr>");
             for(int i=0; i < uneListeDeLivres.size(); i++) {
                 cout.println("<tr>");
-                out.println("<td>" + uneListeDeLivres.get(i).getISBN() + "</td>");
-                out.println("<td>" + uneListeDeLivres.get(i).getNomAuteur() + "</td>");
-                out.println("<td>" + uneListeDeLivres.get(i).getTitre() + "</td>");
+                out.println("<td class=\"tdPlusieursResultats\">" + uneListeDeLivres.get(i).getISBN() + "</td>");
+                out.println("<td class=\"tdPlusieursResultats\">" + uneListeDeLivres.get(i).getNomAuteur() + "</td>");
+                out.println("<td class=\"tdPlusieursResultats\">" + uneListeDeLivres.get(i).getTitre() + "</td>");
                 Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
                 Connexion.setUrl( request.getServletContext().getInitParameter("dtabaseURL") );
                 EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() );
-                out.println("<td>" + uneEvaluationDao.readNumberOfGeneralEvaluationById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
-                out.println("<td>" + uneEvaluationDao.readAverageNoteById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
-                out.println("<td><a href=\"./evaluerUnLivre.jsp?livreAEvaluer="+ uneListeDeLivres.get(i).getISBN() + "\">Évaluer ce livre</a></td>");
+                out.println("<td class=\"tdPlusieursResultats\">" + uneEvaluationDao.readNumberOfGeneralEvaluationById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
+                out.println("<td class=\"tdPlusieursResultats\">" + uneEvaluationDao.readAverageNoteById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
+                out.println("<td class=\"tdPlusieursResultats\"><a href=\"./evaluerUnLivre.jsp?livreAEvaluer="+ uneListeDeLivres.get(i).getISBN() + "\">Évaluer ce livre</a></td>");
                 out.println("</tr>");
             }
             out.println("</table>");

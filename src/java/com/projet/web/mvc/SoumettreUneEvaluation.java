@@ -26,10 +26,26 @@ public class SoumettreUneEvaluation extends HttpServlet {
         //HttpSession uneSession = request.getSession();
         //if( uneSession != null ) {
             String idProf = request.getSession().getAttribute("user.username").toString();      
+            if( idProf == null ) {
+                request.setAttribute("fail-message", "ERREUR ! Je ne trouve pas <idProf>");
+                request.getServletContext().getRequestDispatcher("/evaluerUnLivre.jsp").forward(request, response);
+            }
             String ISBN = request.getParameter("ISBN");
-            int note = Integer.parseInt( request.getParameter("note") );
+            if( ISBN == null ) {
+                request.setAttribute("fail-message", "ERREUR ! Je ne trouve pas <ISBN>");
+                request.getServletContext().getRequestDispatcher("/evaluerUnLivre.jsp").forward(request, response);
+            }
+            int note = Integer.parseInt( request.getParameter("note") );            
             String typeEvaluation = request.getParameter("typeEvaluation");
+            if( typeEvaluation == null ) {
+                request.setAttribute("fail-message", "ERREUR ! Je ne trouve pas <typeEvaluation>");
+                request.getServletContext().getRequestDispatcher("/evaluerUnLivre.jsp").forward(request, response);
+            }
             String commentaire = request.getParameter("commentaire");
+            if( commentaire == null ) {
+                request.setAttribute("fail-message", "ERREUR ! Je ne trouve pas <commentaire>");
+                request.getServletContext().getRequestDispatcher("/evaluerUnLivre.jsp").forward(request, response);
+            }
             if ( "générale".equalsIgnoreCase(typeEvaluation) ) {
                 request.setAttribute("message", "{ " + request.getSession().getAttribute("user.username") + " } a soumis une évaluation générale avec une note de { " + note + " }  pour le livre { " + ISBN + " } avec le commentaire suivant : « " + commentaire + " » !");
                 try {
@@ -44,7 +60,11 @@ public class SoumettreUneEvaluation extends HttpServlet {
                 uneEvaluation.setIdLivre( ISBN );                
                 uneEvaluation.setNote( note );
                 uneEvaluation.setCommentaire( commentaire );
-                uneEvaluationDao.create( uneEvaluation );
+                if( uneEvaluationDao.create( uneEvaluation ) ) {
+                    request.setAttribute("success-message", "L'insertion de l'évaluation a réussi !");
+                } else {
+                    request.setAttribute("fail-message", "ERREUR ! L'insertion de l'évaluation a échoué !");
+                }
                 RequestDispatcher r = this.getServletContext().getRequestDispatcher("/evaluerUnLivre.jsp");
                 r.forward(request, response);
             } else {

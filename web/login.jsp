@@ -19,8 +19,8 @@
             out.println("<span class=\"errorMessage\">"+request.getAttribute("message")+"</span>");
         }
 %>
-        <form action="./controleurFrontal?action=login" method="post">
-            <table>
+        <form action="./controleurFrontal" method="post">
+            <table border="1px solid black">
             <tr>
                 <td>Nom utilisateur : </td>
                 <td><input type="text" name="username" value="<%= request.getParameter("username") != null ? request.getParameter("username") : "" %>"/></td>
@@ -28,9 +28,9 @@
             <tr>
                 <td>Mot de passe : </td>
                 <td><input type="password" name="password" value="<%= request.getParameter("password") != null ? request.getParameter("password") : "" %>"/></td>
-            </tr>
-            <!-- input type="hidden" name="action" value="login"/ -->
-            <tr colspan="2">
+            </tr>            
+            <tr>
+                <td><input type="hidden" name="action" value="login"/></td>
                 <td><input type="submit" value="Me connecter"/></td>
             </tr>
             </table>

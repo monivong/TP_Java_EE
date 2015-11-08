@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 07, 2015 at 06:45 PM
+-- Generation Time: Nov 08, 2015 at 12:00 AM
 -- Server version: 5.6.20-log
 -- PHP Version: 5.4.31
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `evaluation` (
   `idLivre` varchar(20) NOT NULL,
   `note` tinyint(4) NOT NULL,
   `commentaire` text NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `evaluation`
@@ -66,7 +66,8 @@ INSERT INTO `evaluation` (`id`, `idProf`, `idLivre`, `note`, `commentaire`) VALU
 (1, 'adupont', '978-1-4302-2889-9', 8, 'Très bon livre couvrant une bonne partie de la technologie Java-EE avec une étude assez approfondie de JPA. Le livre couvre aussi le framework JSF ainsi que les services web (SOAP et Restful).\r\nLe seul reproche que je peux lui faire est qu''il ne couvre pas les fondements de la programmation web (servlets et JSP).'),
 (2, 'sduvet', '978-1-4302-2889-9', 7, 'Assez bon livre sur la technologie Java-EE. La couverture de JSF et JPA est appréciée. Par contre, je regrette qu''il ne couvre pas des frameworks très populaires tels que Struts et Hibernate.'),
 (3, 'adupont', '2-89377-250-1', 7, 'Bon et gros livre couvrant beaucoup de sujets relatifs au développement de systèmes d''informations. On s''y perd un peu dans les nombreux sujets quelques fois antagonistes (exemple : approche structurée et approche objet).'),
-(4, 'alapointe', '9781430239307', 7, 'Très bon livre pour découvrir le développement d''applications Android avec Java.');
+(4, 'alapointe', '9781430239307', 7, 'Très bon livre pour découvrir le développement d''applications Android avec Java.'),
+(5, 'samnang', '0-201-73733-7', 0, 'Ce livre doit être accompagné d''un ouvrage sur UML et sa syntaxe pour être complet.');
 
 -- --------------------------------------------------------
 
@@ -193,7 +194,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `evaluationcours`
 --

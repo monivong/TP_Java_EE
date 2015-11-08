@@ -18,7 +18,7 @@ public class EvaluationDao extends Dao<Evaluation> {
 
     @Override
     public boolean create(Evaluation x) {
-        String req =    "INSERT INTO evaluation (`idProf`, `idLivre`, `note`, `commentaire`) " + 
+        String req =    "INSERT INTO evaluation (idProf, idLivre, note, commentaire) " + 
                         "VALUES ('" +  x.getIdProf() + "','" + x.getIdLivre() + "', " + x.getNote() + ",'" + x.getCommentaire() + "')";
         Statement stm = null;
         try {
@@ -194,5 +194,21 @@ public class EvaluationDao extends Dao<Evaluation> {
         } catch (SQLException exp) {
         }
         return liste;
+    }
+    public List<Evaluation> findAllCoupleNoteCommentaire(String ISBN) {
+        List<Evaluation> liste = new LinkedList<Evaluation>();
+        try {
+            Statement stm = cnx.createStatement();
+            ResultSet r = stm.executeQuery("SELECT * FROM evaluation WHERE idLivre LIKE '" + ISBN + "'");
+            while (r.next()) {
+                Evaluation c = new Evaluation(r.getInt("id"), r.getString("idProf"), r.getString("idLivre"), r.getInt("note"), r.getString("commentaire"));
+                liste.add(c);
+            }
+            r.close();
+            stm.close();
+            return liste;
+        } catch (SQLException exp) {
+        }
+        return null;
     }
 }
