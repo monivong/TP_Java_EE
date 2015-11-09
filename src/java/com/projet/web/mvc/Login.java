@@ -19,13 +19,13 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String  u = request.getParameter("username"), p = request.getParameter("password");
         if (u==null || u.trim().equalsIgnoreCase("")) {
-            request.setAttribute("message", "Attention ! Vous avez oublié de saisir votre nom d'utilisateur.");
+            request.setAttribute("message", "Vous avez oublié de saisir votre nom d'utilisateur.");
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/login.jsp");
             r.forward(request, response);
             return;
         }
         if( p == null || p.trim().equals("") ) {
-            request.setAttribute("message", "Attention ! Vous avez oublié de saisir votre mot de passe.");
+            request.setAttribute("message", "Vous avez oublié de saisir votre mot de passe.");
             request.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
 
@@ -48,7 +48,7 @@ public class Login extends HttpServlet {
             r.forward(request, response);
         } else if (!user.getPassword().equals(p)) {
             //Mot de passe incorrect
-            request.setAttribute("message", "Erreur ! Le mot de passe saisi est incorrect.");
+            request.setAttribute("message", "Le mot de passe saisi est incorrect.");
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/login.jsp");
             r.forward(request, response);
         } else {

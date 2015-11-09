@@ -1,0 +1,68 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 9-Nov-2015, 2:42:07 PM
+    Author     : MrCaumartin
+*/
+body
+{
+    margin-top: 200px;
+    background: url("../images/openbook.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.form-signin {
+    max-width: 400px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+    color: #ADFF2F;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin button{
+    margin-top:10px;
+}
+.form-signin .underDog {
+    font-size: 12px;
+}
+.form-signin input {
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+}
+@media (max-width: 992px) 
+{
+    body
+    {
+        margin-top: 150px;
+    }    
+}
+@media (max-width: 768px) 
+{
+    body
+    {
+        margin-top: 50px;
+    }
+}

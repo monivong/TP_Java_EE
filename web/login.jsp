@@ -10,35 +10,35 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>login.jsp</title>        
+        <title>login.jsp</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="css/base.css" rel="stylesheet">
+        <link href="css/login.css" rel="stylesheet">
+        <!-- jQuery -->
+        <script src="js/jquery.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
-        <h1>Authentification (enseignant)</h1>
 <%
-        if( request.getAttribute("message") != null ) {
-            out.println("<span class=\"errorMessage\">"+request.getAttribute("message")+"</span>");
-        }
+            String  username = request.getParameter("username");
+            if (username == null) 
+                username = "";
+            else 
+                username = username.trim();
 %>
-        <form action="./controleurFrontal" method="post">
-            <table border="1px solid black">
-            <tr>
-                <td>Nom utilisateur : </td>
-                <td><input type="text" name="username" value="<%= request.getParameter("username") != null ? request.getParameter("username") : "" %>"/></td>
-            </tr>
-            <tr>
-                <td>Mot de passe : </td>
-                <td><input type="password" name="password" value="<%= request.getParameter("password") != null ? request.getParameter("password") : "" %>"/></td>
-            </tr>            
-            <tr>
-                <td><input type="hidden" name="action" value="login"/></td>
-                <td><input type="submit" value="Me connecter"/></td>
-            </tr>
-            </table>
-        </form>
-        <script type="text/css">
-            .errorMessage {
-                color : red;
-            }
-        </script>
+        <div class="container">  
+            <form class="form-signin" action="./controleurFrontal" method="post" id="login">
+                <jsp:include page="alert.jsp" />
+                <h2 class="form-signin-heading">Login Enseignant</h2>
+                <label for="inputEmail" class="sr-only">Username</label>
+                <input type="text" id="inputEmail" name="username" value="<%=username%>" class="form-control" placeholder="Username" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                <input type="hidden" name="action" value="login"/>
+                <button class="btn btn-lg btn-theme btn-block" type="submit">Connexion</button>                  
+            </form>
     </body>
 </html>
