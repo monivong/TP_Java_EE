@@ -25,7 +25,7 @@ public class RechercherParMotsCles extends HttpServlet {
             String motsCles = request.getParameter("motsCles");
             if( motsCles == null || "".equals( request.getParameter( motsCles.trim() ) ) || motsCles.length() == 0 ) {
                 request.setAttribute("message", "ERREUR ! Le(s) mots-clé(s) est invalide...");
-                request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
             } else {
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
@@ -37,13 +37,13 @@ public class RechercherParMotsCles extends HttpServlet {
                 List<Livre> listeDesLivres = unLivreDao.readByKeyword(motsCles);
                 if( listeDesLivres == null ) {
                     request.setAttribute("message", "ERREUR ! Il n'existe aucun livre ayant comme mots-clés { " + motsCles +" }");
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
                 } else if( listeDesLivres.size() == 1 ) {
                     request.setAttribute("unResultat", listeDesLivres.get(0) );
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
                 } else {
                     request.setAttribute("plusieursResultats", listeDesLivres);
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
                 }
             }
         }

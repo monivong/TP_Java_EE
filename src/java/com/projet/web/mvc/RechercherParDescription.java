@@ -24,7 +24,7 @@ public class RechercherParDescription extends HttpServlet {
             String description = request.getParameter("description");
             if( description == null || "".equals( request.getParameter( description.trim() ) ) || description.length() == 0 ) {
                 request.setAttribute("message", "ERREUR ! La description est invalide...");
-                request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
             } else {
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
@@ -36,13 +36,13 @@ public class RechercherParDescription extends HttpServlet {
                 List<Livre> listeDesLivres = unLivreDao.readByDescription(description);
                 if( listeDesLivres == null ) {
                     request.setAttribute("message", "ERREUR ! Il n'existe aucun livre ayant comme description { " + description +" }");
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
                 } else if( listeDesLivres.size() == 1 ) {
                     request.setAttribute("unResultat", listeDesLivres.get(0) );
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
                 } else {
                     request.setAttribute("plusieursResultats", listeDesLivres);
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
                 }
             }
         }

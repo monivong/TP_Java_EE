@@ -6,7 +6,7 @@
 <%@page import="com.projet.entites.Cours"%>
 <%@page import="com.projet.jdbc.dao.implementation.CoursDao"%>
 <%@page import="com.projet.jdbc.Connexion"%>
-<div>
+<div class="container">
     <h1>Consulter la liste des cours</h1>
     <hr />
 <%
@@ -19,33 +19,38 @@
     List<Cours> listeDesCours = unCoursDao.findAll();    
 %>    
 <form>
-    <table>
-        <tr>
-            <td>Choisissez un cours : </td>
+    <table class="table table-responsive">
+        <tbody>
+            <tr>
+                <td>Choisissez un cours : </td>
 <%
-            out.println("<td>");
-            out.println("<select name=coursSelectionne>");
-            for(int i=0; i < listeDesCours.size(); i++) {
-                out.println("<option>" + listeDesCours.get(i).getNumero() + "</option>");
-            }            
-            out.println("</select>");
-            out.println("</td>");            
+                out.println("<td>");
+                out.println("<select placeholder=\"Sélectionner votre cours\" name=coursSelectionne class=\"form-control\">");
+                for(int i=0; i < listeDesCours.size(); i++) {
+                    out.println("<option>" + listeDesCours.get(i).getNumero() + "</option>");
+                }            
+                out.println("</select>");
+                out.println("</td>");            
 %>        
-            <td><input type="submit" value="Go" formaction="./controleurFrontal?action=consulterLaListeDesCours" formmethod="post"/></td>
-        </tr>
+                <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=consulterLaListeDesCours" formmethod="post"/></td>
+            </tr>
+        </tbody>
     </table>
 </form>
 <%
     HttpSession objetSession = request.getSession();
     if( objetSession.getAttribute("listeDesLivresEvalues") != null ) {
-        out.println("<table border=\"1px solid black\"");
+        out.println("<table class=\"table table-striped table-responsive\">");
+        out.println("<thead>");
         out.println("<tr>");
         out.println("<th>ISBN</th>");
         out.println("<th>Titre du livre</th>");
         out.println("<th>Note</th>");
         out.println("</tr>");
+        out.println("</thead>");
+        out.println("<tbody>");
         List<EvaluationCours> uneListeEvaluationCours = (ArrayList<EvaluationCours>) objetSession.getAttribute("listeDesLivresEvalues");
-        for(int i=0; i < uneListeEvaluationCours.size(); i++) {
+        for(int i=0; i < uneListeEvaluationCours.size(); i++) {            
             out.println("<tr>");
             out.println("<td>" + uneListeEvaluationCours.get(i).getIdLivre() + "</td>");
             
@@ -58,8 +63,8 @@
             out.println("<td>" + uneListeEvaluationCours.get(i).getNote() + "</td>");
             out.println("</tr>");
         }
+        out.println("</tbody>");
         out.println("</table>");
     }
 %>          
-    <a href="./index.jsp">Retourner à l'accueil</a>
 </div>

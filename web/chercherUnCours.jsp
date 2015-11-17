@@ -3,7 +3,7 @@
 <%@page import="com.projet.entites.Cours"%>
 <%@page import="com.projet.jdbc.dao.implementation.CoursDao"%>
 <%@page import="com.projet.jdbc.Connexion"%>
-<div>
+<div class="container">
     <h1>Chercher un cours</h1>
     <hr />
 <%
@@ -26,11 +26,12 @@
     } else {       
 %>    
         <form>
-            <table>
+            <table class="table table-responsive">
+                <tbody>
                 <tr>
                     <th>Saisissez le numéro du cours : </th>
                     <td>
-                        <input list="lesCoursExistant" name="coursSelectionne"/>
+                        <input list="lesCoursExistant" placeholder="Sélectionner votre cours" class="form-control" name="coursSelectionne"/>
                         <datalist id="lesCoursExistant">
 <%
                             Class.forName("com.mysql.jdbc.Driver");
@@ -43,12 +44,12 @@
                         </datalist><!-- source de : http://www.w3schools.com/tags/tag_datalist.asp -->
                     </td>
                     <input type="hidden" name="action" value="chercherUnCours"/>
-                    <td><input type="submit" value="Trouver" formaction="./controleurFrontal" formmethod="post"/></td>
+                    <td><input type="submit" class="form-control" value="Trouver" formaction="./controleurFrontal" formmethod="post"/></td>
                 </tr>
+                </body>
             </table>
         </form>
 <%
     }
 %>    
-    <a href="./index.jsp">Retourner à la page d'accueil</a>
 </div>

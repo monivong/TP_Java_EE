@@ -8,8 +8,7 @@
 <%@page import="com.projet.jdbc.dao.implementation.LivreDao"%>
 <%@page import="com.projet.entites.Livre"%>
 <%@page import="java.util.LinkedList"%>
-<link rel="stylesheet" type="text/css" href="./js/styleForEvaluerUnLivre.css">
-<div>
+<div class="container">
     <h1>Évaluer un livre</h1>
     <hr />
 <%
@@ -32,68 +31,76 @@
         Livre unLivre = unLivreDao.read(ISBN.trim());
         if(unLivre != null) {            
 %>
-            <table border="1px solid black">
-                <tr>
-                    <th>ISBN : </th>
-                    <td><%= unLivre.getISBN() %></td>
-                </tr>
-                <tr>
-                    <th>Auteur(s) : </th>
-                    <td><%= unLivre.getNomAuteur() %></td>
-                </tr>
-                <tr>
-                    <th>Titre : </th>
-                    <td><%= unLivre.getTitre() %></td>
-                </tr>
-                <tr>
-                    <th>Nombre d'évaluation générale : </th>
-<%                    
-                    Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
-                    Connexion.setUrl( request.getServletContext().getInitParameter("dtabaseURL") );
-                    EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() );
-                    out.println("<td>" + uneEvaluationDao.readNumberOfGeneralEvaluationById( unLivre.getISBN() ) + "</td>");
-%>                
-                </tr>
-                <tr>
-                    <th>Note moyenne : </th>
-                    <td><%= uneEvaluationDao.readAverageNoteById( unLivre.getISBN() ) %></td>                   
-                </tr>
-                <tr>
-                    <th>Maison d'édition : </th>
-                    <td><%= unLivre.getEdition() %></td>
-                </tr>
-                <tr>
-                    <th>Année : </th>
-                    <td><%= unLivre.getAnnee() %></td>
-                </tr>
-                <tr>
-                    <th>Mots-clés : </th>
-                    <td><%= unLivre.getMotsCles() %></td>
-                </tr>
-                <tr>
-                    <th>Description : </th>
-                    <td><%= unLivre.getDescription() %></td>
-                </tr>
-                <tr>
-                    <th>Nombre de pages : </th>
-                    <td><%= unLivre.getNbPages() %></td>
-                </tr>
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>ISBN : </th>
+                        <td><%= unLivre.getISBN() %></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Auteur(s) : </th>
+                        <td><%= unLivre.getNomAuteur() %></td>
+                    </tr>
+                    <tr>
+                        <th>Titre : </th>
+                        <td><%= unLivre.getTitre() %></td>
+                    </tr>
+                    <tr>
+                        <th>Nombre d'évaluation générale : </th>
+    <%                    
+                        Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
+                        Connexion.setUrl( request.getServletContext().getInitParameter("dtabaseURL") );
+                        EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() );
+                        out.println("<td>" + uneEvaluationDao.readNumberOfGeneralEvaluationById( unLivre.getISBN() ) + "</td>");
+    %>                
+                    </tr>
+                    <tr>
+                        <th>Note moyenne : </th>
+                        <td><%= uneEvaluationDao.readAverageNoteById( unLivre.getISBN() ) %></td>                   
+                    </tr>
+                    <tr>
+                        <th>Maison d'édition : </th>
+                        <td><%= unLivre.getEdition() %></td>
+                    </tr>
+                    <tr>
+                        <th>Année : </th>
+                        <td><%= unLivre.getAnnee() %></td>
+                    </tr>
+                    <tr>
+                        <th>Mots-clés : </th>
+                        <td><%= unLivre.getMotsCles() %></td>
+                    </tr>
+                    <tr>
+                        <th>Description : </th>
+                        <td><%= unLivre.getDescription() %></td>
+                    </tr>
+                    <tr>
+                        <th>Nombre de pages : </th>
+                        <td><%= unLivre.getNbPages() %></td>
+                    </tr>
+                <tbody>
             </table>      
             <hr />
 <%                                    
             List<Evaluation> uneListeEvaluation = uneEvaluationDao.findAllCoupleNoteCommentaire( unLivre.getISBN() );
             if( uneListeEvaluation.size() > 0 ) {
-                out.println("<table border=\"1px solid black\">");
+                out.println("<table class=\"table table-striped table-responsive\">");
+                out.println("<thead>");
                 out.println("<tr>");
                 out.println("<th>Notes des évaluations générales : </th>");
                 out.println("<th>Commentaires : </th>");
                 out.println("</tr>");
+                out.println("</thead>");
+                out.println("<tbody>");
                 for(int i=0; i < uneListeEvaluation.size(); i++) {
                     out.println("<tr>");
                     out.println("<td>" + uneListeEvaluation.get(i).getNote() + "</td>");
                     out.println("<td>" + uneListeEvaluation.get(i).getCommentaire() + "</td>");
                     out.println("</tr>");
                 }
+                out.println("</tbody>");
                 out.println("</table>");
             }
         }
@@ -142,15 +149,7 @@
                     </tr>
                 </table>
             </form>
-        </div><!-- Fin div id=evaluation -->        
-        <script type="text/css">
-            #informationsDuLivre {
-                float : left;
-            }
-            #evaluation {
-                float : left;'
-            }
-        </script>
+        </div><!-- Fin div id=evaluation -->
 <%
     } else {
         Class.forName("com.mysql.jdbc.Driver");
@@ -159,7 +158,8 @@
         List<Livre> uneListeDeLivres = unLivreDao.findAll();
         PrintWriter cout = response.getWriter();
         if( uneListeDeLivres != null ) {
-            out.println("<table border=\"2px solid black\">");            
+            out.println("<table class=\"table table-striped table-responsive\">");   
+            out.println("<thead>");
             out.println("<tr>");
             out.println("<th id=\"colonneISBN\">ISBN</th>");
             out.println("<th>Auteur(s)</th>");
@@ -167,6 +167,8 @@
             out.println("<th>Nombre d'évaluation générale reçu</th>");
             out.println("<th>Note moyenne des évaluations</th>");
             out.println("</tr>");
+            out.println("</thead>");
+            out.println("<tbody>");
             for(int i=0; i < uneListeDeLivres.size(); i++) {
                 cout.println("<tr>");
                 out.println("<td class=\"tdPlusieursResultats\">" + uneListeDeLivres.get(i).getISBN() + "</td>");
@@ -177,14 +179,14 @@
                 EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() );
                 out.println("<td class=\"tdPlusieursResultats\">" + uneEvaluationDao.readNumberOfGeneralEvaluationById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
                 out.println("<td class=\"tdPlusieursResultats\">" + uneEvaluationDao.readAverageNoteById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
-                out.println("<td class=\"tdPlusieursResultats\"><a href=\"./evaluerUnLivre.jsp?livreAEvaluer="+ uneListeDeLivres.get(i).getISBN() + "\">Évaluer ce livre</a></td>");
+                out.println("<td class=\"tdPlusieursResultats\"><a href=\"./index.jsp?page=evaluerUnLivre&livreAEvaluer="+ uneListeDeLivres.get(i).getISBN() + "\"><i class=\"fa fa-pencil-square-o\"></a></td>");
                 out.println("</tr>");
             }
+            out.println("</tbody>");
             out.println("</table>");
         } else {
             cout.println("<h3>Erreur de lecture dans la BD !!</h3>");
         }        
     }   
 %>      
-    <a href="./index.jsp">Retourner à la page d'accueil</a>
 </div>

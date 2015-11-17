@@ -23,7 +23,7 @@ public class RechercherParMotsClesDansTitre extends HttpServlet {
             String keyword = request.getParameter("motsDansLeTitre");
             if( keyword == null || "".equals( keyword.trim() ) ) {
                 request.setAttribute("message", "ERREUR ! Le mots dans le titre est invalide.");
-                request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
             } else {
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
@@ -35,13 +35,13 @@ public class RechercherParMotsClesDansTitre extends HttpServlet {
                 List<Livre> listeDesLivres = unLivreDao.readByKeywordInTitle(keyword);
                 if( listeDesLivres == null ) {
                     request.setAttribute("message", "ERREUR ! Il n'existe aucun titre portant le mot { " + keyword +" }");
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
                 } else if( listeDesLivres.size() == 1 ) {
                     request.setAttribute("unResultat", listeDesLivres.get(0) );
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response); 
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response); 
                 }else {
                     request.setAttribute("plusieursResultats", listeDesLivres);
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
                 }
             }
         }

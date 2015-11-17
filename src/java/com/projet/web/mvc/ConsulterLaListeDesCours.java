@@ -32,10 +32,10 @@ public class ConsulterLaListeDesCours extends HttpServlet {
                 List<EvaluationCours> listeDesLivresEvalues = uneEvaluationCoursDao.readBooksListByCourseNumber( coursSelectionne );
                 HttpSession objetSession = request.getSession(true);
                 objetSession.setAttribute("listeDesLivresEvalues", listeDesLivresEvalues);
-                request.getServletContext().getRequestDispatcher("/consulterLaListeDesCours.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterLaListeDesCours").forward(request, response);
             } else {
                 request.setAttribute("message", "Erreur ! Le cours sélectionné est invalide.");
-                request.getServletContext().getRequestDispatcher("/consulterLaListeDesCours.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterLaListeDesCours").forward(request, response);
             }
         }
     }

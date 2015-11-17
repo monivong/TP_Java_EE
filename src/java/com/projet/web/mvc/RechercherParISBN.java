@@ -23,7 +23,7 @@ public class RechercherParISBN extends HttpServlet {
             String ISBN = request.getParameter("isbn");
             if( ISBN==null || "".equals( ISBN.trim() ) ) {
                 request.setAttribute("message", "ERREUR ! L'ISBN est invalide.");
-                request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
             } else {
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
@@ -35,10 +35,10 @@ public class RechercherParISBN extends HttpServlet {
                 Livre unLivre = unLivreDao.readByISBN( ISBN );
                 if( unLivre == null ) {
                     request.setAttribute("message", "ERREUR ! Il n'existe aucun livre avec l'ISBN { " + ISBN +" }");
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
                 } else {
                     request.setAttribute("unResultat", unLivre);
-                    request.getServletContext().getRequestDispatcher("/consulterUneEvaluation.jsp").forward(request, response);
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
                 }
             }            
         }

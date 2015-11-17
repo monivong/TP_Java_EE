@@ -20,13 +20,13 @@ public class Login extends HttpServlet {
         String  u = request.getParameter("username"), p = request.getParameter("password");
         if (u==null || u.trim().equalsIgnoreCase("")) {
             request.setAttribute("message", "Vous avez oublié de saisir votre nom d'utilisateur.");
-            RequestDispatcher r = this.getServletContext().getRequestDispatcher("/login.jsp");
+            RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp?page=login");
             r.forward(request, response);
             return;
         }
         if( p == null || p.trim().equals("") ) {
             request.setAttribute("message", "Vous avez oublié de saisir votre mot de passe.");
-            request.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getServletContext().getRequestDispatcher("/index.jsp?page=login").forward(request, response);
         }
 
         try {
@@ -43,13 +43,13 @@ public class Login extends HttpServlet {
         if (user==null) {
             //Utilisateur inexistant
             request.setAttribute("message", "Désolé, il n'existe aucun utilisateur du nom de { "+ u +" }");
-            //response.sendRedirect("login.jsp");Ne fonctionne pas correctement (ie. perd le message d'erreur).
-            RequestDispatcher r = this.getServletContext().getRequestDispatcher("/login.jsp");
+            //response.sendRedirect("index.jsp?page=login");Ne fonctionne pas correctement (ie. perd le message d'erreur).
+            RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp?page=login");
             r.forward(request, response);
         } else if (!user.getPassword().equals(p)) {
             //Mot de passe incorrect
             request.setAttribute("message", "Le mot de passe saisi est incorrect.");
-            RequestDispatcher r = this.getServletContext().getRequestDispatcher("/login.jsp");
+            RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp?page=login");
             r.forward(request, response);
         } else {
             //connexion OK

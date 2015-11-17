@@ -1,68 +1,66 @@
-<%
-    if( request.getSession().getAttribute("connected") == null ) {
+<%  
+    HttpSession objetSession = request.getSession();
+    String view;
+    if (request.getParameter("page") == null)
+        view = "main";
+    else
+        switch(request.getParameter("page")) //Il faut rajouter les pages ici pour que la redirection fontionne
+        {
+            case "chercherUnCours":             view = "chercherUnCours";
+                                                break;
+            case "consulterLaListeDesCours":    view = "consulterLaListeDesCours";
+                                                break;
+            case "consulterUneEvaluation":      view = "consulterUneEvaluation";
+                                                break;
+            case "evaluerUnLivre":              view = "evaluerUnLivre";
+                                                break;
+            case "login":                       view = "main";
+                                                break;
+            case "main":                        view = "main";
+                                                break;
+            default:                            view = "404";
+                                                break;
+        }    
+    if (objetSession.getAttribute("connected") == null)
+        view="login";
 %>
-        <jsp:forward page="login.jsp"/>
-<%
-    }
-    if( request.getAttribute("message") != null )
-        request.removeAttribute("message");
-%>
-<%@page import="java.util.List"%>
-<%@page import="com.projet.jdbc.dao.implementation.CoursDao"%>
-<%@page import="com.projet.jdbc.Connexion"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.projet.entites.Cours"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">                    
-        <title>index.jsp</title>
-        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/jquery-ui.js"></script>        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script><!-- source de https://developers.google.com/speed/libraries/ -->
-        <link rel="stylesheet" type="text/css" href="\script\styles.css">        
-        <script type="text/css">
-            #mesOnglets {
-                background-color : blue;
-            }
-            #ongletEvaluerUnLivre h1 {
-                color : red;
-            }
-        </script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>The book - <%=view%></title>
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="css/base.css" rel="stylesheet">
+        <link href="css/<%=view%>.css" rel="stylesheet">
+        <% view = view+".jsp"; %>
+        <!-- Custom Fonts -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+        <!-- jQuery -->
+        <script src="js/jquery.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>        
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
     </head>
     <body>
-        <h1>Bonjour <%= request.getSession().getAttribute("user.username") %></h1><a href="./controleurFrontal?action=logout">Me déconnecter</a>
-        <div id="mesOnglets">
-            <%--
-            <ul>
-              <li><a href="#ongletEvaluerUnLivre">Évaluer un livre</a></li>
-              <li><a href="#ongletConsulterUneEvaluation">Consulter une évaluation</a></li>
-              <li><a href="#ongletConsulterLaListeDesCours">Consulter la liste des cours</a></li>
-              <li><a href="#ongletChercherUnCours">Chercher un cours</a></li>
-            </ul>
-            --%>
-            <nav>
-                <a href="./evaluerUnLivre.jsp">Évaluer un livre</a> |
-                <a href="./consulterUneEvaluation.jsp">Consulter une évaluation</a> |
-                <a href="./consulterLaListeDesCours.jsp">Consulter la liste des cours</a> |
-                <a href="./chercherUnCours.jsp">Chercher un cours</a>
-            </nav><!-- source de : http://www.w3schools.com/tags/tag_nav.asp -->
-            <div id="ongletEvaluerUnLivre">
-                <jsp:include page="evaluerUnLivre.jsp"/>
-            </div>
-            <div id="ongletConsulterUneEvaluation">
-                <jsp:include page="consulterUneEvaluation.jsp"/>
-            </div>
-            <div id="ongletConsulterLaListeDesCours">
-                <jsp:include page="consulterLaListeDesCours.jsp"/>
-            </div>
-            <div id="ongletChercherUnCours">
-                <jsp:include page="chercherUnCours.jsp"/>
-            </div>
-        </div><!-- Fin id="tabs" -->
-        <script type="text/javascript">
-            $("#mesOnglets").tabs();
-        </script>            
+        <jsp:include page="navbar.jsp"/>
+        <jsp:include page="alert.jsp"/>
+        <jsp:include page="<%=view%>"/>
+        <jsp:include page="footer.jsp"/>
+        
     </body>
+    
 </html>

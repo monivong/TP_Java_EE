@@ -10,7 +10,20 @@ and open the template in the editor.
 body
 {
     margin-top: 50px;
+    margin-left : 120px;
+    margin-bottom: 120px;
+    background-color: #F5F5DC;
     //background-color: #eee;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;    
 }
 
 /* Button custom color */
@@ -34,7 +47,7 @@ body
 /* Form Control theme */
 .form-control {
     color: #ADFF2F;
-    background-color: #ADFF2F;
+    background-color: transparent;
     background-image: none;
     border: 2px solid #ADFF2F;
     -webkit-box-shadow: inset 0 1px 1px #ADFF2F;
@@ -64,3 +77,147 @@ fieldset[disabled] .form-control {
     background-color: #eee;
 }
 /* /.Form Control theme */
+
+/* Navbar */
+/* The left sidebar */
+
+.sidebar-left {
+	font-family: Arial, Helvetica, sans-serif;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #292c2f;
+	width: 120px;
+	height: 100%;
+	padding: 20px 0;
+}
+
+.sidebar-left a.company-logo {
+	display: block;
+	text-decoration: none;
+	margin: 0 auto;
+	padding: 0;
+	text-align: center;
+	color:  #ffffff;
+	font-size: 28px;
+	line-height: 2.6;
+        text-transform: capitalize;
+        color: #ADFF2F;
+}
+.sidebar-left a.company-logo:hover {
+    color : #e1ff2f;
+}
+
+.sidebar-left .sidebar-links {
+	margin: 20px auto;
+}
+
+.sidebar-left .sidebar-links a {
+	display: block;
+	text-decoration: none;
+	margin: 0 auto 5px auto;
+	padding: 20px 0;
+	background-color: #35393e;
+	text-align: center;
+	color:  #b3bcc5;
+	font-size: 12px;
+	font-weight: bold;
+	border-left-width: 2px;
+	border-left-style: solid;
+}
+
+.sidebar-left .sidebar-links a i.fa {
+	display: block;
+	font-size: 35px;
+	margin-bottom: 5px;
+}
+
+.sidebar-left .sidebar-links a.selected{
+	background-color: #ffffff;
+	color:  #7c8085;
+	font-size: 12px;
+	font-weight: bold;
+	cursor: default;
+}
+
+/* Link Colors */
+
+.sidebar-left .sidebar-links a.link-blue {
+	border-color: #487db2;
+}
+.sidebar-left .sidebar-links a.link-blue i.fa {
+	color: #487db2;
+}
+
+.sidebar-left .sidebar-links a.link-red {
+	border-color: #da4545;
+}
+.sidebar-left .sidebar-links a.link-red i.fa {
+	color: #da4545;
+}
+
+.sidebar-left .sidebar-links a.link-yellow {
+	border-color: #d0d237;
+}
+.sidebar-left .sidebar-links a.link-yellow i.fa {
+	color: #d0d237;
+}
+
+.sidebar-left .sidebar-links a.link-green {
+	border-color: #ADFF2F;
+}
+.sidebar-left .sidebar-links a.link-green i.fa {
+	color: #ADFF2F;
+}
+.sidebar-left .sidebar-links a.link-green:hover {
+	border-color:#e1ff2f;
+        color : #e1ff2f;
+}
+.sidebar-left .sidebar-links a.link-green:hover i.fa {
+	color: #e1ff2f;
+}
+
+/* Making the sidebar responsive */
+
+@media (max-width: 900px) {
+}
+
+/* Mobile phone layout */
+
+@media (max-width: 450px) {
+    body{
+        margin-left: 70px;
+    }
+    .sidebar-left {
+        padding: 20px 0;
+        width: 60px;
+    }
+    .sidebar-left a.company-logo {        
+        width: 100%;
+    }
+    .sidebar-left .sidebar-links {
+        text-align: center;
+        margin: 20px auto 0;
+    }
+
+    .sidebar-left .sidebar-links a {
+        display: block;
+        max-width: 100px;
+        vertical-align: middle;
+        text-align: left;
+        margin: 0 auto 5px;
+        padding: 10px 25px;
+        border-top: none;
+        border-left-width: 2px;
+        border-left-style: solid;
+    }
+
+    .sidebar-left .sidebar-links a i.fa {
+        display: inline-block;
+        font-size: 20px;
+        width: 20px;
+        vertical-align: middle;
+    }
+
+}
+/* /.Navbar */
