@@ -1,28 +1,42 @@
-<%  
-    HttpSession objetSession = request.getSession();
-    String view;
-    if (request.getParameter("page") == null)
+<%      
+    String view = "login";
+    if( request.getSession() != null) {
+        /*
+        HttpSession objetSession = request.getSession();
+        String view;
+        if (request.getParameter("page") == null)
+            view = "main";
+        */
         view = "main";
-    else
-        switch(request.getParameter("page")) //Il faut rajouter les pages ici pour que la redirection fontionne
-        {
-            case "chercherUnCours":             view = "chercherUnCours";
-                                                break;
-            case "consulterLaListeDesCours":    view = "consulterLaListeDesCours";
-                                                break;
-            case "consulterUneEvaluation":      view = "consulterUneEvaluation";
-                                                break;
-            case "evaluerUnLivre":              view = "evaluerUnLivre";
-                                                break;
-            case "login":                       view = "main";
-                                                break;
-            case "main":                        view = "main";
-                                                break;
-            default:                            view = "404";
-                                                break;
-        }    
-    if (objetSession.getAttribute("connected") == null)
-        view="login";
+        if( request.getParameter("page") != null ) {//else {
+            view = "404";            
+            if( "login".equals( request.getParameter("page") ) )
+                view = "main";
+            else
+                view = request.getParameter("page");
+/* GLASSFISH ne gère pas les Switch..Case avec les String !! C'est dommage....
+            switch(request.getParameter("page")) //Il faut rajouter les pages ici pour que la redirection fontionne
+            {
+                case "chercherUnCours":             view = "chercherUnCours";
+                                                    break;
+                case "consulterLaListeDesCours":    view = "consulterLaListeDesCours";
+                                                    break;
+                case "consulterUneEvaluation":      view = "consulterUneEvaluation";
+                                                    break;
+                case "evaluerUnLivre":              view = "evaluerUnLivre";
+                                                    break;
+                case "login":                       view = "main";
+                                                    break;
+                case "main":                        view = "main";
+                                                    break;
+                default:                            view = "404";
+                                                    break;
+            } 
+            */            
+        }
+        if ( request.getSession().getAttribute("connected") == null)
+            view = "login";
+    }
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -38,8 +52,9 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="css/base.css" rel="stylesheet">
-        <link href="css/<%=view%>.css" rel="stylesheet">
-        <% view = view+".jsp"; %>
+        <link href="css/login.css" rel="stylesheet">
+<!--link href="css/<%--= view--%>.css" rel="stylesheet"-->        
+<%-- view = view+".jsp";--%>
         <!-- Custom Fonts -->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -58,9 +73,8 @@
     <body>
         <jsp:include page="navbar.jsp"/>
         <jsp:include page="alert.jsp"/>
-        <jsp:include page="<%=view%>"/>
-        <jsp:include page="footer.jsp"/>
-        
+<!--jsp:include page="<%--= view --%>"/-->
+        <jsp:include page="<%= view+".jsp" %>"/>
+        <jsp:include page="footer.jsp"/>        
     </body>
-    
 </html>
