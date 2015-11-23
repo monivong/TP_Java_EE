@@ -6,6 +6,7 @@ import com.projet.jdbc.Connexion;
 import com.projet.jdbc.dao.implementation.EvaluationCoursDao;
 import com.projet.jdbc.dao.implementation.EvaluationDao;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -25,31 +26,32 @@ public class SoumettreUneEvaluation extends HttpServlet {
         
         //HttpSession uneSession = request.getSession();
         //if( uneSession != null ) {
+        PrintWriter out = response.getWriter();
             String idProf = request.getSession().getAttribute("user.username").toString();      
             if( idProf == null ) {
-                request.setAttribute("fail-message", "ERREUR ! Je ne trouve pas <idProf>");
+                request.setAttribute("error-message", "ERREUR ! Je ne trouve pas <idProf>");
                 request.getServletContext().getRequestDispatcher("/index.jsp?page=evaluerUnLivre").forward(request, response);
             }
             String ISBN = request.getParameter("ISBN");
             if( ISBN == null ) {
-                request.setAttribute("fail-message", "ERREUR ! Je ne trouve pas <ISBN>");
+                request.setAttribute("error-message", "ERREUR ! Je ne trouve pas <ISBN>");
                 request.getServletContext().getRequestDispatcher("/index.jsp?page=evaluerUnLivre").forward(request, response);
             }
             int note = Integer.parseInt( request.getParameter("note") );            
             String typeEvaluation = request.getParameter("typeEvaluation");
             if( typeEvaluation == null ) {
-                request.setAttribute("fail-message", "ERREUR ! Je ne trouve pas <typeEvaluation>");
+                request.setAttribute("error-message", "ERREUR ! Je ne trouve pas <typeEvaluation>");
                 request.getServletContext().getRequestDispatcher("/index.jsp?page=evaluerUnLivre").forward(request, response);
             }
             String commentaire = request.getParameter("commentaire");
             if( commentaire == null ) {
-                request.setAttribute("fail-message", "ERREUR ! Je ne trouve pas <commentaire>");
+                request.setAttribute("error-message", "ERREUR ! Je ne trouve pas <commentaire>");
                 request.getServletContext().getRequestDispatcher("/index.jsp?page=evaluerUnLivre").forward(request, response);
             }
-            if ( "générale".equalsIgnoreCase(typeEvaluation) ) {
-                request.setAttribute("message", "{ " + request.getSession().getAttribute("user.username") + " } a soumis une évaluation générale avec une note de { " + note + " }  pour le livre { " + ISBN + " } avec le commentaire suivant : « " + commentaire + " » !");
+            if ( "generale".equalsIgnoreCase(typeEvaluation.trim()) ) {
+                //request.setAttribute("message", "{ " + request.getSession().getAttribute("user.username") + " } a soumis une évaluation générale avec une note de { " + note + " }  pour le livre { " + ISBN + " } avec le commentaire suivant : « " + commentaire + " » !");
                 try {
-                    Class.forName("com.mysql.jdbc.Driver");
+                    Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(SoumettreUneEvaluation.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -62,13 +64,15 @@ public class SoumettreUneEvaluation extends HttpServlet {
                 uneEvaluation.setCommentaire( commentaire );
                 if( uneEvaluationDao.create( uneEvaluation ) ) {
                     request.setAttribute("success-message", "L'insertion de l'évaluation a réussi !");
+                    //out.println("L'insertion a réussi !!");
                 } else {
-                    request.setAttribute("fail-message", "ERREUR ! L'insertion de l'évaluation a échoué !");
-                }
-                RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp?page=evaluerUnLivre");
-                r.forward(request, response);
+                    request.setAttribute("error-message", "ERREUR ! L'insertion de l'évaluation a échoué !");
+                    //out.println("L'insertion a échouée...");
+                    //out.println( uneEvaluation.toString() );
+                }                
+                request.getServletContext().getRequestDispatcher("/index.jsp?page=evaluerUnLivre").forward(request, response);
             } else {
-                request.setAttribute("message", "{ " + request.getSession().getAttribute("user.username") + " } a soumis une évaluation avec une note de { " + note + " } en lien avec le cours { " + typeEvaluation + " } pour le livre { " + ISBN + " } avec le commentaire suivant : « " + commentaire + " » !");
+                //request.setAttribute("message", "{ " + request.getSession().getAttribute("user.username") + " } a soumis une évaluation avec une note de { " + note + " } en lien avec le cours { " + typeEvaluation + " } pour le livre { " + ISBN + " } avec le commentaire suivant : « " + commentaire + " » !");                
                 try {
                     Class.forName( this.getServletContext().getInitParameter("jdbcDriver") );
                 } catch (ClassNotFoundException ex) {
@@ -82,13 +86,11 @@ public class SoumettreUneEvaluation extends HttpServlet {
                 uneEvaluationCours.setIdCours( typeEvaluation );
                 uneEvaluationCours.setNote( note );
                 uneEvaluationCours.setCommentaire( commentaire );
-                if( uneEvaluationCoursDao.create( uneEvaluationCours ) )
-                    this.getServletContext().getRequestDispatcher("/index.jsp?page=evaluerUnLivre").forward(request, response);
+                if( uneEvaluationCoursDao.create( uneEvaluationCours ) ) {
+                    request.setAttribute("success-message", "L'insertion de l'évaluation à un cous a réussi !");
+                    request.getServletContext().getRequestDispatcher("/index.jsp?page=evaluerUnLivre").forward(request, response);
+                }
             }    
-        //} else {
-        //    request.setAttribute("message", "Désolé, votre session a été expirée.");
-        //    request.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-        //}
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

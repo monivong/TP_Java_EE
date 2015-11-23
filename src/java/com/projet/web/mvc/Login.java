@@ -19,36 +19,36 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String  u = request.getParameter("username"), p = request.getParameter("password");
         if (u==null || u.trim().equalsIgnoreCase("")) {
-            request.setAttribute("message", "Vous avez oublié de saisir votre nom d'utilisateur.");
+            request.setAttribute("eroor-message", "Vous avez oublié de saisir votre nom d'utilisateur.");
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp?page=login");
             r.forward(request, response);
             return;
         }
         if( p == null || p.trim().equals("") ) {
-            request.setAttribute("message", "Vous avez oublié de saisir votre mot de passe.");
+            request.setAttribute("error-message", "Vous avez oublié de saisir votre mot de passe.");
             request.getServletContext().getRequestDispatcher("/index.jsp?page=login").forward(request, response);
         }
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //Connexion.setUrl(this.getServletContext().getInitParameter("urlBd"));
-        Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");
+        Connexion.setUrl(this.getServletContext().getInitParameter("databaseURL"));
+        //Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");
         UserDao dao = new UserDao(Connexion.getInstance());
         User user = dao.read(u.trim());
         
         if (user==null) {
             //Utilisateur inexistant
-            request.setAttribute("message", "Désolé, il n'existe aucun utilisateur du nom de { "+ u +" }");
+            request.setAttribute("error-message", "Désolé, il n'existe aucun utilisateur du nom de { "+ u +" }");
             //response.sendRedirect("index.jsp?page=login");Ne fonctionne pas correctement (ie. perd le message d'erreur).
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp?page=login");
             r.forward(request, response);
         } else if (!user.getPassword().equals(p)) {
             //Mot de passe incorrect
-            request.setAttribute("message", "Le mot de passe saisi est incorrect.");
+            request.setAttribute("error-message", "Le mot de passe saisi est incorrect.");
             RequestDispatcher r = this.getServletContext().getRequestDispatcher("/index.jsp?page=login");
             r.forward(request, response);
         } else {

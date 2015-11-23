@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 08, 2015 at 12:00 AM
+-- Generation Time: Nov 23, 2015 at 08:31 PM
 -- Server version: 5.6.20-log
 -- PHP Version: 5.4.31
 
@@ -56,18 +56,19 @@ CREATE TABLE IF NOT EXISTS `evaluation` (
   `idLivre` varchar(20) NOT NULL,
   `note` tinyint(4) NOT NULL,
   `commentaire` text NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `evaluation`
 --
 
 INSERT INTO `evaluation` (`id`, `idProf`, `idLivre`, `note`, `commentaire`) VALUES
-(1, 'adupont', '978-1-4302-2889-9', 8, 'Très bon livre couvrant une bonne partie de la technologie Java-EE avec une étude assez approfondie de JPA. Le livre couvre aussi le framework JSF ainsi que les services web (SOAP et Restful).\r\nLe seul reproche que je peux lui faire est qu''il ne couvre pas les fondements de la programmation web (servlets et JSP).'),
+(1, 'adupont', '978-1-4302-2889-9', 8, 'Très bon livre couvrant une bonne partie de la technologie Java-EE avec une étude assez approfondie de JPA. Le livre couvre aussi le framework JSF ainsi que les services web (SOAP et Restful).Le seu'),
 (2, 'sduvet', '978-1-4302-2889-9', 7, 'Assez bon livre sur la technologie Java-EE. La couverture de JSF et JPA est appréciée. Par contre, je regrette qu''il ne couvre pas des frameworks très populaires tels que Struts et Hibernate.'),
-(3, 'adupont', '2-89377-250-1', 7, 'Bon et gros livre couvrant beaucoup de sujets relatifs au développement de systèmes d''informations. On s''y perd un peu dans les nombreux sujets quelques fois antagonistes (exemple : approche structurée et approche objet).'),
+(3, 'adupont', '2-89377-250-1', 7, 'Bon et gros livre couvrant beaucoup de sujets relatifs au développement de systèmes d''informations. On s''y perd un peu dans les nombreux sujets quelques fois antagonistes (exemple : approche structuré'),
 (4, 'alapointe', '9781430239307', 7, 'Très bon livre pour découvrir le développement d''applications Android avec Java.'),
-(5, 'samnang', '0-201-73733-7', 0, 'Ce livre doit être accompagné d''un ouvrage sur UML et sa syntaxe pour être complet.');
+(5, 'samnang', '0-201-73733-7', 3, 'Ce livre doit être accompagné d''un ouvrage sur UML et sa syntaxe pour être complet.'),
+(6, 'samnang', '2-7440-7090-4', 8, 'Les chapitres sur les Designs Patterns ne sont pas Ã  nÃ©gliger.');
 
 -- --------------------------------------------------------
 
@@ -82,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `evaluationcours` (
   `idCours` varchar(15) NOT NULL,
   `note` tinyint(4) NOT NULL,
   `commentaire` tinytext NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `evaluationcours`
@@ -90,7 +91,9 @@ CREATE TABLE IF NOT EXISTS `evaluationcours` (
 
 INSERT INTO `evaluationcours` (`id`, `idLivre`, `idProf`, `idCours`, `note`, `commentaire`) VALUES
 (1, '2-89377-250-1', 'alapointe', '420-AW6-RO', 5, 'Pour ce cours sur le développement de projets selon l''approche objet, ce livre ne peut servir que de référence aux étudiants dans le volet de gestion de projet (surtout sa planification). UML et les processus de développement objet ne sont pas couverts ad'),
-(2, '978-1-4302-2889-9', 'alapointe', '420-AW6-RO', 5, 'Dans ce cours, ce livre peut être utile pour des étudiants qui développent leur projet en Java-EE s''ils utilisent un des éléments suivants : JSF, JPA, seervices web.');
+(2, '978-1-4302-2889-9', 'alapointe', '420-AW6-RO', 5, 'Dans ce cours, ce livre peut être utile pour des étudiants qui développent leur projet en Java-EE s''ils utilisent un des éléments suivants : JSF, JPA, seervices web.'),
+(8, '2-7440-1962-3', 'samnang', '420-046-RO', 7, 'Bonne introduction Ã  JDBC.'),
+(6, '2-7440-7312-1', 'samnang', '420-046-RO', 6, 'TrÃ¨s bon pour dÃ©couvrir Swing.');
 
 -- --------------------------------------------------------
 
@@ -194,12 +197,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `evaluationcours`
 --
 ALTER TABLE `evaluationcours`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

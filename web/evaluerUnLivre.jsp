@@ -130,7 +130,7 @@
                         <td>
 <%
                         out.println("<select name=\"typeEvaluation\">");
-                        out.println("<option selected=\"selected\">générale</option>");
+                        out.println("<option value=\"generale\" selected=\"selected\">générale</option>");
                         //source de : http://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript 
                         Class.forName("com.mysql.jdbc.Driver");
                         Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");

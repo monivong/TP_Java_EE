@@ -22,7 +22,7 @@
     }
 </script>
 <div class="container">
-    <h1>Bonjour <span style="text-transform: capitalize;"><%= request.getSession().getAttribute("user.username") %></span></h1><a href="./controleurFrontal?action=logout">Me déconnecter</a>
+    <h1>Bonjour <span style="text-transform: capitalize;"><%= request.getSession().getAttribute("user.username") %></span></h1>
 </div>
 <div id="mesOnglets">    
     <div id="ongletEvaluerUnLivre">

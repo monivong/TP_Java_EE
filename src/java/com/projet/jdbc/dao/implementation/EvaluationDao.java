@@ -18,13 +18,15 @@ public class EvaluationDao extends Dao<Evaluation> {
 
     @Override
     public boolean create(Evaluation x) {
-        String req =    "INSERT INTO evaluation (idProf, idLivre, note, commentaire) " + 
-                        "VALUES ('" +  x.getIdProf() + "','" + x.getIdLivre() + "', " + x.getNote() + ",'" + x.getCommentaire() + "')";
-        Statement stm = null;
+        PreparedStatement stm = null;        
         try {
-            stm = cnx.createStatement();
-            int n = stm.executeUpdate(req);
-            if (n > 0) {
+            stm = cnx.prepareStatement("INSERT INTO `evaluation` (`idProf`, `idLivre`, `note`, `commentaire`) VALUES (?, ?, ?, ?)");
+            stm.setString(1, x.getIdProf());
+            stm.setString(2, x.getIdLivre());
+            stm.setInt(3, x.getNote());
+            stm.setString(4, x.getCommentaire());
+            int n = stm.executeUpdate();
+            if ( n > 0 ) {
                 stm.close();
                 return true;
             }
