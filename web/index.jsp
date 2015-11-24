@@ -52,7 +52,7 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="css/base.css" rel="stylesheet">
-        <link href="css/login.css" rel="stylesheet">
+        <link href="css/<%=view%>.css" rel="stylesheet">
 <!--link href="css/<%--= view--%>.css" rel="stylesheet"-->        
 <%-- view = view+".jsp";--%>
         <!-- Custom Fonts -->

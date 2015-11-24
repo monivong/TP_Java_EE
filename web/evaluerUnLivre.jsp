@@ -108,12 +108,12 @@
         </div><!-- Fin div id=informationDuLivre -->
         <div id="evaluation">
             <form action="./controleurFrontal?action=soumettreUneEvaluation"  method="post">
-                <table>
+                <table class="table">
                     <tr>
                         <td>Note : </td>
                         <!--td><input type="number" min="0" max="10" name="note" value="0"/></td-->
                         <td>
-                            <select name="note">
+                            <select class="form-control" name="note">
 <%
                             for(int i=0; i < 11; i++)
                                 out.println("<option value=\""+ i +"\">" + i + "</option>");
@@ -123,13 +123,13 @@
                     </tr>
                     <tr>
                         <td>Commentaire : </td>
-                        <td><input type="text" name="commentaire" size="100"/></td>
+                        <td><input class="form-control" type="text" name="commentaire" size="100"/></td>
                     </tr>
                     <tr>
                         <td>Type d'évaluation : </td>
                         <td>
 <%
-                        out.println("<select name=\"typeEvaluation\">");
+                        out.println("<select class=\"form-control\" name=\"typeEvaluation\">");
                         out.println("<option value=\"generale\" selected=\"selected\">générale</option>");
                         //source de : http://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript 
                         Class.forName("com.mysql.jdbc.Driver");
@@ -145,7 +145,7 @@
                     </tr>
                     <tr>
                         <td><input type="hidden" name="ISBN" value="<%= ISBN %>"/></td>
-                        <td><input type="submit" value="Soumettre évaluation"/></td>
+                        <td><button class="btn btn-lg btn-theme btn-block" type="submit">Soumettre évaluation</button></td>
                     </tr>
                 </table>
             </form>
