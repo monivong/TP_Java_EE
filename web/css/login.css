@@ -49,7 +49,7 @@ body
 }
 .form-signin input {
     margin-top: 10px;
-    background: transparent;
+    background: #69727C;
     border: none;
 }
 @media (max-width: 992px) 
