@@ -14,6 +14,9 @@ if (objetSession.getAttribute("connected") != null)
             <a class="link-green" href="./controleurFrontal?action=logout"><i class="fa fa-sign-out"></i><div class="hidden-xs hidden-sm">Se déconnecter</div></a>
     </div>
 </aside>
+<aside class="sidebar-right">
+    <img src="./images/mockingbird.png" class="img-responsive" />
+</aside>
 <script>
     $(function () {
         var links = $('.sidebar-links > a');

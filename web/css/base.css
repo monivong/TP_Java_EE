@@ -91,7 +91,15 @@ fieldset[disabled] .form-control {
 	height: 100%;
 	padding: 20px 0;
 }
-
+.sidebar-right {
+	position: fixed;
+        width: 100px;
+	top: 0;
+	right: 0;
+        margin-top: 20px;
+        margin-right: 20px;
+        z-index: -1;
+}
 .sidebar-left a.company-logo {
 	display: block;
 	text-decoration: none;
