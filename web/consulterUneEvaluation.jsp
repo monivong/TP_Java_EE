@@ -12,7 +12,7 @@
         } else if( request.getAttribute("plusieursResultats") != null ) {
             List<Livre> listeDesLivres = (ArrayList<Livre>) request.getAttribute("plusieursResultats");
 %>
-            <table class="table table-responsive">
+            <table class="table table-responsive table-hover">
                 <thead>
                     <tr>
                         <th>ISBN</th>
@@ -22,23 +22,25 @@
                         <th>Moyenne sur 10</th>                    
                     </tr>
                 </thead>
-<%
+<%              out.println("<tbody>");
                     for(int i=0; i < listeDesLivres.size(); i++) {
-                        out.println("<tbody>");
-                        out.println("<tr>");
+                        
+                        out.println("<tr class=\"actionToggle\">");
                         out.println("<td>" + listeDesLivres.get(i).getISBN() + "</td>");
                         out.println("<td>" + listeDesLivres.get(i).getNomAuteur() + "</td>");
                         out.println("<td>" + listeDesLivres.get(i).getTitre() + "</td>");
-                        out.println("<td>" + listeDesLivres.get(i).getNbEvaluations() + "</td>");
-                        
+                        out.println("<td>" + listeDesLivres.get(i).getNbEvaluations() + "</td>");                        
                         Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
                         Connexion.setUrl( request.getServletContext().getInitParameter("databaseURL") );
                         EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() ); 
                         out.println("<td>" + uneEvaluationDao.readAverageNoteById( listeDesLivres.get(i).getISBN() ) + "</td>");            
                         out.println("</tr>");
-                        out.println("</tbody>");
+                        out.println("<tr class=\"comment\">");
+                        out.println("<td>TEST</td>");
+                        out.println("</tr>");                        
                     }
-%>
+                out.println("</tbody>");
+%>              
             </table>
 <%                
         } else if( request.getAttribute("unResultat") != null) {
@@ -90,37 +92,51 @@
             </table>
 <%        
         }
-%>    
-    <form>
-        <table class="table table-responsive">
-            <thead>
-                <tr>
-                    <th colspan="3" text-align="center"><h2>Rechercher par : </h2></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>ISBN : </td>
-                    <td><input type="text" class="form-control" name="isbn"/></td>
-                    <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParISBN" formmethod="post"/></td>
-                </tr>            
-                <tr>
-                    <td>Mot(s) dans le titre : </td>
-                    <td><input type="text" class="form-control" name="motsDansLeTitre"></td>                            
-                    <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParMotsClesDansTitre" formmethod="post"/></td>
-                </tr>
-                <tr>
-                    <td>Description : </td>
-                    <%--<td><textarea rows="3" cols="30" name="description"></textarea></td>--%><!-- Difficile à récupérer la valeur ... -->
-                    <td><input type="text" class="form-control" name="description"/></td>
-                    <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParDescription" formmethod="post"/></td>
-                </tr>
-                <tr>
-                    <td>Mot(s)-Clé(s)</td>
-                    <td><input type="text" class="form-control" name="motsCles"/></td>
-                    <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParMotsCles" formmethod="post"/></td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
+%>        
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th colspan="3" text-align="center"><h2>Rechercher par : </h2></th>
+            </tr>
+        </thead>
+        <tbody>
+            <form>
+            <tr>
+                <td>ISBN : </td>
+                <td><input type="text" class="form-control" name="isbn"/></td>
+                <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParISBN" formmethod="post"/></td>
+            </tr> 
+            </form>
+            <form>
+            <tr>
+                <td>Mot(s) dans le titre : </td>
+                <td><input type="text" class="form-control" name="motsDansLeTitre"></td>                            
+                <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParMotsClesDansTitre" formmethod="post"/></td>
+            </tr>
+            </form>
+            <form>
+            <tr>
+                <td>Description : </td>
+                <%--<td><textarea rows="3" cols="30" name="description"></textarea></td>--%><!-- Difficile à récupérer la valeur ... -->
+                <td><input type="text" class="form-control" name="description"/></td>
+                <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParDescription" formmethod="post"/></td>
+            </tr>
+            </form>
+            <form>
+            <tr>
+                <td>Mot(s)-Clé(s)</td>
+                <td><input type="text" class="form-control" name="motsCles"/></td>
+                <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParMotsCles" formmethod="post"/></td>
+            </tr>
+            </form>
+        </tbody>
+    </table>
 </div>
+<script>
+    $( document ).ready(function() {
+        $(".comment").hide();
+        $(".actionToggle").click(function(){
+            $(this).next().toggle("slow");
+        });
+    });
+</script>
