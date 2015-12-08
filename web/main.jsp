@@ -22,7 +22,7 @@
     }
 </script>
 <div class="container">
-    <h1>Bonjour <span style="text-transform: capitalize;"><%= request.getSession().getAttribute("user.username") %></span></h1>
+    <h1>Bonjour <span style="text-transform: capitalize; color: orange;"><%= request.getSession().getAttribute("user.username") %></span></h1>
 </div>
 <div id="mesOnglets">    
     <div id="ongletEvaluerUnLivre">
