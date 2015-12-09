@@ -25,8 +25,8 @@
     } 
     if( request.getParameter("livreAEvaluer") != null ) {
         String ISBN = request.getParameter("livreAEvaluer");
-        Class.forName("com.mysql.jdbc.Driver");
-        Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");
+        Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
+        Connexion.setUrl( request.getServletContext().getInitParameter("databaseURL") );
         LivreDao unLivreDao = new LivreDao(Connexion.getInstance());
         Livre unLivre = unLivreDao.read(ISBN.trim());
         if(unLivre != null) {            

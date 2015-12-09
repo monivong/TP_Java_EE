@@ -87,7 +87,7 @@ public class SoumettreUneEvaluation extends HttpServlet {
                 uneEvaluationCours.setNote( note );
                 uneEvaluationCours.setCommentaire( commentaire );
                 if( uneEvaluationCoursDao.create( uneEvaluationCours ) ) {
-                    request.setAttribute("success-message", "L'insertion de l'évaluation à un cous a réussi !");
+                    request.setAttribute("success-message", "L'insertion de l'évaluation à un cours a réussi !");
                     request.getServletContext().getRequestDispatcher("/index.jsp?page=evaluerUnLivre").forward(request, response);
                 }
             }    

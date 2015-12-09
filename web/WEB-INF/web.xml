@@ -34,6 +34,14 @@
         <servlet-name>ConsulterLaListeDesCours</servlet-name>
         <servlet-class>com.projet.web.mvc.ConsulterLaListeDesCours</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EvaluerUnLivre</servlet-name>
+        <servlet-class>com.projet.web.mvc.EvaluerUnLivre</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrouverTousLesCours</servlet-name>
+        <servlet-class>com.projet.web.mvc.TrouverTousLesCours</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControleurFrontal</servlet-name>
         <url-pattern>/controleurFrontal</url-pattern>
@@ -81,6 +89,14 @@
     <servlet-mapping>
         <servlet-name>ConsulterLaListeDesCours</servlet-name>
         <url-pattern>/showCoursesList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EvaluerUnLivre</servlet-name>
+        <url-pattern>/evaluateABook</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrouverTousLesCours</servlet-name>
+        <url-pattern>/findAllCourses</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

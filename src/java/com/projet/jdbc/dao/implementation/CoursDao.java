@@ -70,14 +70,10 @@ public class CoursDao extends Dao<Cours> {
     public Cours read(String numero) {        
         PreparedStatement stm = null;
         try {
-			//Statement stm = cnx.createStatement();
-			//ResultSet r = stm.executeQuery("SELECT * FROM user WHERE numId = '" + id + "'");
-            //Avec requête paramétrée :
             stm = cnx.prepareStatement("SELECT * FROM cours WHERE numero = ?");
             stm.setString(1,numero);
             ResultSet r = stm.executeQuery();
             if (r.next()) {
-                //User c = new User(r.getString("numId"),r.getString("mdp"));
                 Cours c = new Cours();
                 c.setNumero(r.getString("numero"));
                 c.setNom(r.getString("nom"));

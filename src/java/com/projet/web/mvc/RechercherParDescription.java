@@ -21,7 +21,7 @@ public class RechercherParDescription extends HttpServlet {
             if( request.getAttribute("unResultat") != null ) request.removeAttribute("unResultat");
             if( request.getAttribute("plusieursResultats") != null ) request.removeAttribute("plusieursResultats");
             
-            String description = request.getParameter("description");
+            String description = request.getParameter("valeur");
             if( description == null || "".equals( request.getParameter( description.trim() ) ) || description.length() == 0 ) {
                 request.setAttribute("message", "ERREUR ! La description est invalide...");
                 request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);

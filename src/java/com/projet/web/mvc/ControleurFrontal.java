@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ControleurFrontal extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         String action = request.getParameter("action");
         if (action !=null) {
             if ("login".equals(action)) {
@@ -25,25 +26,35 @@ public class ControleurFrontal extends HttpServlet {
             if("chercherUnCours".equals(action)) {
                 //this.getServletContext().getRequestDispatcher("/findACourse").forward(request, response);
                 request.getServletContext().getRequestDispatcher("/showCoursesList").forward(request, response);
+            }          
+            if( "consulterLaListeDesCours".equals(action) ) {
+                //out.println("Je suis dans l'action « ConsulterLaListeDesCours »");
+                request.getServletContext().getRequestDispatcher("/findAllCourses").forward(request, response);
+            }
+            if( "evaluerUnLivre".equals( action ) ) {
+                request.getServletContext().getRequestDispatcher("/evaluateABook").forward(request, response);
+                return;
             }
             if( "soumettreUneEvaluation".equals(action) ) {
-                this.getServletContext().getRequestDispatcher("/submitEvaluation").forward(request, response);
+                    this.getServletContext().getRequestDispatcher("/submitEvaluation").forward(request, response);
             }
-            if("rechercherParISBN".equals(action)) {
-                this.getServletContext().getRequestDispatcher("/findByISBN").forward(request, response);
-            }
-            if("rechercherParMotsClesDansTitre".equals(action)) {
-                this.getServletContext().getRequestDispatcher("/findByKeywordInTitle").forward(request, response);
-            }
-            if("rechercherParDescription".equals(action)) {
-                this.getServletContext().getRequestDispatcher("/findByDescription").forward(request, response);
-            }
-            if("rechercherParMotsCles".equals(action)) {
-                this.getServletContext().getRequestDispatcher("/findByKeyword").forward(request, response);
-            }
-            if( "consulterLaListeDesCours".equals(action) ) {
-                request.getServletContext().getRequestDispatcher("/showCoursesList").forward(request, response);
-            }
+            if("rechercher".equals(action) ) {
+                
+                if( "rechercherParISBN".equals( request.getParameter("actionDeSelection") ) ) {
+                    this.getServletContext().getRequestDispatcher("/findByISBN").forward(request, response);
+                }
+                if( "rechercherParMotsClesDansTitre".equals( request.getParameter("actionDeSelection") ) ) {
+                    this.getServletContext().getRequestDispatcher("/findByKeywordInTitle").forward(request, response);
+                }
+                if( "rechercherParDescription".equals( request.getParameter("actionDeSelection") ) ) {
+                    this.getServletContext().getRequestDispatcher("/findByDescription").forward(request, response);
+                }
+                if( "rechercherParMotsCles".equals( request.getParameter("actionDeSelection") ) ) {
+                    this.getServletContext().getRequestDispatcher("/findByKeyword").forward(request, response);
+                }                
+                //out.println("<h3>Je suis dans l'action de « rechercher »</h2>");
+                return;
+            }            
         } else {
             request.setAttribute("message", "ControleurFrontal : « Je n'ai rien reçu... »");
             this.getServletContext().getRequestDispatcher("/index.jsp");

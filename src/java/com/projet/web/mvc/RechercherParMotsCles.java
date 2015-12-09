@@ -22,7 +22,7 @@ public class RechercherParMotsCles extends HttpServlet {
             if( request.getAttribute("plusieursResultats") != null ) request.removeAttribute("plusieursResultats");
             request.removeAttribute("message");
             
-            String motsCles = request.getParameter("motsCles");
+            String motsCles = request.getParameter("valeur");
             if( motsCles == null || "".equals( request.getParameter( motsCles.trim() ) ) || motsCles.length() == 0 ) {
                 request.setAttribute("message", "ERREUR ! Le(s) mots-clé(s) est invalide...");
                 request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);

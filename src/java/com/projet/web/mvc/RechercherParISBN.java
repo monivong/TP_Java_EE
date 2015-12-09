@@ -20,7 +20,7 @@ public class RechercherParISBN extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             if( request.getAttribute("plusieursResultats") != null ) request.removeAttribute("plusieursResultats");
             
-            String ISBN = request.getParameter("isbn");
+            String ISBN = request.getParameter("valeur");
             if( ISBN==null || "".equals( ISBN.trim() ) ) {
                 request.setAttribute("message", "ERREUR ! L'ISBN est invalide.");
                 request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);

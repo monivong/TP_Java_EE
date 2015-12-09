@@ -20,7 +20,7 @@ public class RechercherParMotsClesDansTitre extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             if( request.getAttribute("unResultat") != null ) request.removeAttribute("unResultat");
             
-            String keyword = request.getParameter("motsDansLeTitre");
+            String keyword = request.getParameter("valeur");
             if( keyword == null || "".equals( keyword.trim() ) ) {
                 request.setAttribute("message", "ERREUR ! Le mots dans le titre est invalide.");
                 request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);

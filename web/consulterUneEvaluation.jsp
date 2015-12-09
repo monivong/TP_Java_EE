@@ -1,3 +1,4 @@
+<%@page import="com.projet.entites.Evaluation"%>
 <%@page import="com.projet.jdbc.dao.implementation.EvaluationDao"%>
 <%@page import="com.projet.jdbc.Connexion"%>
 <%@page import="java.util.ArrayList"%>
@@ -22,7 +23,8 @@
                         <th>Moyenne sur 10</th>                    
                     </tr>
                 </thead>
-<%              out.println("<tbody>");
+<%              
+                out.println("<tbody>");
                     for(int i=0; i < listeDesLivres.size(); i++) {
                         
                         out.println("<tr class=\"actionToggle\">");
@@ -35,9 +37,25 @@
                         EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() ); 
                         out.println("<td>" + uneEvaluationDao.readAverageNoteById( listeDesLivres.get(i).getISBN() ) + "</td>");            
                         out.println("</tr>");
-                        out.println("<tr class=\"comment\">");
-                        out.println("<td>TEST</td>");
-                        out.println("</tr>");                        
+                        
+                        
+                        Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
+                        Connexion.setUrl( request.getServletContext().getInitParameter("databaseURL") );
+                        List<Evaluation> listeDesEvaluationsPlusieurs = uneEvaluationDao.findAllCoupleNoteCommentaire( listeDesLivres.get(i).getISBN() );
+                        if( listeDesEvaluationsPlusieurs != null ) {
+                            out.println("<table class=\"comment\">");
+                            out.println("<tr>");
+                            out.println("<th>Note</th>");
+                            out.println("<th>Commentaire</th>");
+                            out.println("</tr>");
+                            for(int j=0; j < listeDesEvaluationsPlusieurs.size() ; j++) {
+                                out.println("<tr>");
+                                out.println("<td>" + listeDesEvaluationsPlusieurs.get(j).getNote() + "</td>");
+                                out.println("<td>" + listeDesEvaluationsPlusieurs.get(j).getCommentaire() + "</td>");
+                                out.println("</tr>");
+                            }
+                            out.println("</table>");
+                        }                        
                     }
                 out.println("</tbody>");
 %>              
@@ -59,8 +77,6 @@
                         <th>Mots-Clés</th>
                         <th>Description</th>
                         <th>Nombre de pages</th>
-                        <th>Notes des évaluations</th>
-                        <th>Commentaire</th>
                         <th>Évaluer</th>
                     </tr>
                 </thead>
@@ -83,9 +99,25 @@
                         out.println("<td>" + unLivre.getMotsCles() + "</td>");
                         out.println("<td>" + unLivre.getDescription() + "</td>");
                         out.println("<td>" + unLivre.getNbPages() + "</td>");
-                        out.println("<td>" + unLivre.getNote() + "</td>");
-                        out.println("<td>" + "À FAIRE" + "</td>");
-                        out.println("<td><a href=\"./evaluerUnLivre.jsp?livreAEvaluer='"+ unLivre.getISBN() + "'\"><i class=\"fa fa-pencil-square-o\"></i></a></td>");
+                        out.println("<td><a href=\"controleurFrontal?action=evaluerUnLivre&livreAEvaluer="+ unLivre.getISBN() + "\"><i class=\"fa fa-pencil-square-o\"></i></a></td>");
+                        
+                        Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
+                        Connexion.setUrl( request.getServletContext().getInitParameter("databaseURL") );
+                        List<Evaluation> listeDesEvaluations = uneEvaluationDao.findAllCoupleNoteCommentaire( unLivre.getISBN() );
+                        if( listeDesEvaluations != null ) {
+                            out.println("<table class=\"table table-striped\">");
+                            out.println("<tr>");
+                            out.println("<th>Note</th>");
+                            out.println("<th>Commentaire</th>");
+                            out.println("</tr>");
+                            for(int i=0; i < listeDesEvaluations.size(); i++) {
+                                out.println("<tr>");
+                                out.println("<td>" + listeDesEvaluations.get(i).getNote() + "</td>");
+                                out.println("<td>" + listeDesEvaluations.get(i).getCommentaire() + "</td>");
+                                out.println("</tr>");
+                            }
+                            out.println("</table>");
+                        }                        
 %>
                     </tr>
                 </tbody>
@@ -100,35 +132,20 @@
             </tr>
         </thead>
         <tbody>
-            <form>
+            <form action="controleurFrontal?action=rechercher" method="post">
             <tr>
-                <td>ISBN : </td>
-                <td><input type="text" class="form-control" name="isbn"/></td>
-                <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParISBN" formmethod="post"/></td>
+                <td>
+                    <select name="actionDeSelection" class="form-control">
+                        <option value="rechercherParISBN">ISBN</option>
+                        <option value="rechercherParMotsClesDansTitre">Mot(s) dans le titre</option>   
+                        <option value="rechercherParDescription">Description</option>
+                        <option value="rechercherParMotsCles">Mot(s)-Clé(s</option>
+                    </select>
+                </td>
+                <td><input type="text" class="form-control" name="valeur"/></td>
+                <td><input type="submit" class="form-control" value="Go"/></td>
             </tr> 
-            </form>
-            <form>
-            <tr>
-                <td>Mot(s) dans le titre : </td>
-                <td><input type="text" class="form-control" name="motsDansLeTitre"></td>                            
-                <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParMotsClesDansTitre" formmethod="post"/></td>
-            </tr>
-            </form>
-            <form>
-            <tr>
-                <td>Description : </td>
-                <%--<td><textarea rows="3" cols="30" name="description"></textarea></td>--%><!-- Difficile à récupérer la valeur ... -->
-                <td><input type="text" class="form-control" name="description"/></td>
-                <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParDescription" formmethod="post"/></td>
-            </tr>
-            </form>
-            <form>
-            <tr>
-                <td>Mot(s)-Clé(s)</td>
-                <td><input type="text" class="form-control" name="motsCles"/></td>
-                <td><input type="submit" class="form-control" value="Go" formaction="./controleurFrontal?action=rechercherParMotsCles" formmethod="post"/></td>
-            </tr>
-            </form>
+            </form>            
         </tbody>
     </table>
 </div>
