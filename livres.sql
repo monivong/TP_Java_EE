@@ -2,10 +2,10 @@
 -- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
--- Client :  localhost
--- Généré le :  Mer 09 Décembre 2015 à 01:56
--- Version du serveur :  5.6.20-log
--- Version de PHP :  5.4.31
+-- Host: localhost
+-- Generation Time: Dec 09, 2015 at 05:44 AM
+-- Server version: 5.6.20-log
+-- PHP Version: 5.4.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données :  `livres`
+-- Database: `livres`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `cours`
+-- Table structure for table `cours`
 --
 
 CREATE TABLE IF NOT EXISTS `cours` (
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `cours` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `cours`
+-- Dumping data for table `cours`
 --
 
 INSERT INTO `cours` (`numero`, `nom`, `duree`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `cours` (`numero`, `nom`, `duree`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `evaluation`
+-- Table structure for table `evaluation`
 --
 
 CREATE TABLE IF NOT EXISTS `evaluation` (
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `evaluation` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
--- Contenu de la table `evaluation`
+-- Dumping data for table `evaluation`
 --
 
 INSERT INTO `evaluation` (`id`, `idProf`, `idLivre`, `note`, `commentaire`) VALUES
@@ -74,7 +74,7 @@ INSERT INTO `evaluation` (`id`, `idProf`, `idLivre`, `note`, `commentaire`) VALU
 -- --------------------------------------------------------
 
 --
--- Structure de la table `evaluationcours`
+-- Table structure for table `evaluationcours`
 --
 
 CREATE TABLE IF NOT EXISTS `evaluationcours` (
@@ -84,10 +84,10 @@ CREATE TABLE IF NOT EXISTS `evaluationcours` (
   `idCours` varchar(15) NOT NULL,
   `note` tinyint(4) NOT NULL,
   `commentaire` tinytext NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
--- Contenu de la table `evaluationcours`
+-- Dumping data for table `evaluationcours`
 --
 
 INSERT INTO `evaluationcours` (`id`, `idLivre`, `idProf`, `idCours`, `note`, `commentaire`) VALUES
@@ -95,12 +95,13 @@ INSERT INTO `evaluationcours` (`id`, `idLivre`, `idProf`, `idCours`, `note`, `co
 (2, '978-1-4302-2889-9', 'alapointe', '420-AW6-RO', 5, 'Dans ce cours, ce livre peut être utile pour des étudiants qui développent leur projet en Java-EE s''ils utilisent un des éléments suivants : JSF, JPA, seervices web.'),
 (8, '2-7440-1962-3', 'samnang', '420-046-RO', 7, 'Bonne introduction Ã  JDBC.'),
 (6, '2-7440-7312-1', 'samnang', '420-046-RO', 6, 'TrÃ¨s bon pour dÃ©couvrir Swing.'),
-(9, '978-1-4302-2889-9', 'samnang', '420-046-RO', 10, 'trop cool !');
+(9, '978-1-4302-2889-9', 'samnang', '420-046-RO', 10, 'trop cool !'),
+(10, '978-1-4302-2889-9', 'moumene', '420-046-RO', 8, 'Ce n''est pas cool...');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `livre`
+-- Table structure for table `livre`
 --
 
 CREATE TABLE IF NOT EXISTS `livre` (
@@ -118,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `livre` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Informations sur les livres';
 
 --
--- Contenu de la table `livre`
+-- Dumping data for table `livre`
 --
 
 INSERT INTO `livre` (`ISBN`, `Titre`, `Edition`, `Annee`, `MotsCles`, `NomAuteur`, `etat`, `Description`, `NbPages`, `note`, `nbEvaluations`) VALUES
@@ -135,7 +136,7 @@ INSERT INTO `livre` (`ISBN`, `Titre`, `Edition`, `Annee`, `MotsCles`, `NomAuteur
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -145,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`username`, `nom_prenom`, `password`) VALUES
@@ -159,53 +160,53 @@ INSERT INTO `user` (`username`, `nom_prenom`, `password`) VALUES
 ('moumene', 'Abdelmoumene_Toudeft', 'moumene');
 
 --
--- Index pour les tables exportées
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `cours`
+-- Indexes for table `cours`
 --
 ALTER TABLE `cours`
  ADD PRIMARY KEY (`numero`);
 
 --
--- Index pour la table `evaluation`
+-- Indexes for table `evaluation`
 --
 ALTER TABLE `evaluation`
  ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `evaluationcours`
+-- Indexes for table `evaluationcours`
 --
 ALTER TABLE `evaluationcours`
  ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `livre`
+-- Indexes for table `livre`
 --
 ALTER TABLE `livre`
  ADD PRIMARY KEY (`ISBN`), ADD KEY `NumAuteur` (`NomAuteur`);
 
 --
--- Index pour la table `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
  ADD PRIMARY KEY (`username`);
 
 --
--- AUTO_INCREMENT pour les tables exportées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `evaluation`
+-- AUTO_INCREMENT for table `evaluation`
 --
 ALTER TABLE `evaluation`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT pour la table `evaluationcours`
+-- AUTO_INCREMENT for table `evaluationcours`
 --
 ALTER TABLE `evaluationcours`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -127,7 +127,7 @@ public class CoursDao extends Dao<Cours> {
         List<Cours> liste = new LinkedList<Cours>();
         try {
             Statement stm = cnx.createStatement();
-            ResultSet r = stm.executeQuery("SELECT * FROM cours");
+            ResultSet r = stm.executeQuery("SELECT * FROM cours ORDER BY duree DESC");
             while (r.next()) {
                 Cours c = new Cours(r.getString("numero"), r.getString("nom"), r.getInt("duree"));
                 liste.add(c);

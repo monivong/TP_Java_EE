@@ -136,11 +136,45 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
         }
         return null;
     }
+    public List<EvaluationCours> readByIdLivreAndIdCours(String idLivre, String idCours) {        
+        PreparedStatement stm = null;
+        List<EvaluationCours> liste = new ArrayList<EvaluationCours>();
+        try {
+            stm = cnx.prepareStatement("SELECT * FROM evaluationcours WHERE idLivre = ? AND idCours = ?");
+            stm.setString(1,idLivre);
+            stm.setString(2, idCours);            
+            ResultSet r = stm.executeQuery();
+            while(r.next()) {
+                EvaluationCours c = new EvaluationCours();
+                c.setId(r.getInt("id"));
+                c.setIdLivre(r.getString("idLivre"));
+                c.setIdProf(r.getString("idProf"));
+                c.setIdCours(r.getString("idCours"));
+                c.setNote(r.getInt("note"));
+                c.setCommentaire(r.getString("commentaire"));
+                liste.add( c );
+            }
+            r.close();
+            stm.close();
+            return liste;
+        } catch (SQLException exp) {
+			
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {            
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
     public List<EvaluationCours> readBooksListByCourseNumber(String idCours) {
         PreparedStatement stm = null;
         List<EvaluationCours> listeDesLivresEvalues = new ArrayList<EvaluationCours>();
         try {
-            stm = cnx.prepareStatement("SELECT * FROM evaluationcours WHERE idCours = ? ORDER BY note DESC");
+            stm = cnx.prepareStatement("SELECT * FROM evaluationcours WHERE idCours = ? GROUP BY idLivre ORDER BY note DESC");
             stm.setString(1,idCours);
             ResultSet r = stm.executeQuery();
             while(r.next()) {

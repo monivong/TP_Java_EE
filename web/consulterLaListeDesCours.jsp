@@ -24,11 +24,11 @@
         if( session.getAttribute("listeDesCours") != null ) {
             List<Cours> listeDesCours = (List<Cours>) session.getAttribute("listeDesCours");
             if( listeDesCours != null ) {
-                out.println("<table class=\"table table-striped table-bordered\">");
+                out.println("<table class=\"table table-striped table-bordered table-hover\">");
                 out.println("<tr>");
-                out.println("<th>Numéro</th>");
-                out.println("<th>Nom</th>");
-                out.println("<th>Durée</th>");
+                out.println("<th align=\"center\">Numéro</th>");
+                out.println("<th align=\"center\">Nom</th>");
+                out.println("<th align=\"center\">Durée</th>");
                 for(int i=0; i < listeDesCours.size(); i++) {
                     out.println("<tr>");
                     out.println("<td>" + listeDesCours.get(i).getNumero() + "</td>");

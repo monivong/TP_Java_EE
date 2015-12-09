@@ -31,14 +31,11 @@
         Livre unLivre = unLivreDao.read(ISBN.trim());
         if(unLivre != null) {            
 %>
-            <table class="table table-striped table-responsive">
-                <thead>
+            <table class="table table-bordered table-striped table-responsive">
                     <tr>
                         <th>ISBN : </th>
                         <td><%= unLivre.getISBN() %></td>
                     </tr>
-                </thead>
-                <tbody>
                     <tr>
                         <th>Auteur(s) : </th>
                         <td><%= unLivre.getNomAuteur() %></td>
@@ -80,13 +77,12 @@
                         <th>Nombre de pages : </th>
                         <td><%= unLivre.getNbPages() %></td>
                     </tr>
-                <tbody>
             </table>      
             <hr />
 <%                                    
             List<Evaluation> uneListeEvaluation = uneEvaluationDao.findAllCoupleNoteCommentaire( unLivre.getISBN() );
             if( uneListeEvaluation.size() > 0 ) {
-                out.println("<table class=\"table table-striped table-responsive\">");
+                out.println("<table class=\"table table-striped table-bordered table-responsive\">");
                 out.println("<thead>");
                 out.println("<tr>");
                 out.println("<th>Notes des évaluations générales : </th>");
@@ -96,7 +92,7 @@
                 out.println("<tbody>");
                 for(int i=0; i < uneListeEvaluation.size(); i++) {
                     out.println("<tr>");
-                    out.println("<td>" + uneListeEvaluation.get(i).getNote() + "</td>");
+                    out.println("<td align=\"center\">" + uneListeEvaluation.get(i).getNote() + "</td>");
                     out.println("<td>" + uneListeEvaluation.get(i).getCommentaire() + "</td>");
                     out.println("</tr>");
                 }
@@ -152,8 +148,8 @@
         </div><!-- Fin div id=evaluation -->
 <%
     } else {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");
+        Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
+        Connexion.setUrl( request.getServletContext().getInitParameter("databaseURL") );
         LivreDao unLivreDao = new LivreDao(Connexion.getInstance());
         List<Livre> uneListeDeLivres = unLivreDao.findAll();
         PrintWriter cout = response.getWriter();
@@ -177,8 +173,8 @@
                 Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
                 Connexion.setUrl( request.getServletContext().getInitParameter("dtabaseURL") );
                 EvaluationDao uneEvaluationDao = new EvaluationDao( Connexion.getInstance() );
-                out.println("<td class=\"tdPlusieursResultats\">" + uneEvaluationDao.readNumberOfGeneralEvaluationById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
-                out.println("<td class=\"tdPlusieursResultats\">" + uneEvaluationDao.readAverageNoteById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
+                out.println("<td class=\"tdPlusieursResultats\" align=\"center\">" + uneEvaluationDao.readNumberOfGeneralEvaluationById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
+                out.println("<td class=\"tdPlusieursResultats\" align=\"center\">" + uneEvaluationDao.readAverageNoteById( uneListeDeLivres.get(i).getISBN() ) + "</td>");
                 out.println("<td class=\"tdPlusieursResultats\"><a href=\"./index.jsp?page=evaluerUnLivre&livreAEvaluer="+ uneListeDeLivres.get(i).getISBN() + "\"><i class=\"fa fa-pencil-square-o\"></a></td>");
                 out.println("</tr>");
             }

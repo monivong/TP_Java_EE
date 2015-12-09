@@ -199,9 +199,11 @@ public class EvaluationDao extends Dao<Evaluation> {
     }
     public List<Evaluation> findAllCoupleNoteCommentaire(String ISBN) {
         List<Evaluation> liste = new LinkedList<Evaluation>();
+        PreparedStatement stm = null;
         try {
-            Statement stm = cnx.createStatement();
-            ResultSet r = stm.executeQuery("SELECT * FROM evaluation WHERE idLivre LIKE '" + ISBN + "'");
+            stm = cnx.prepareStatement("SELECT * FROM evaluation WHERE idLivre = ? ORDER BY note DESC");
+            stm.setString(1, ISBN);
+            ResultSet r = stm.executeQuery();
             while (r.next()) {
                 Evaluation c = new Evaluation(r.getInt("id"), r.getString("idProf"), r.getString("idLivre"), r.getInt("note"), r.getString("commentaire"));
                 liste.add(c);

@@ -26,11 +26,11 @@ public class RechercherParISBN extends HttpServlet {
                 request.getServletContext().getRequestDispatcher("/index.jsp?page=consulterUneEvaluation").forward(request, response);
             } else {
                 try {
-                    Class.forName("com.mysql.jdbc.Driver");
+                    Class.forName( request.getServletContext().getInitParameter("jdbcDriver") );
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }       
-                Connexion.setUrl("jdbc:mysql://localhost/livres?user=root&password=root");                
+                Connexion.setUrl( request.getServletContext().getInitParameter("databaseURL") );                
                 LivreDao unLivreDao = new LivreDao( Connexion.getInstance() );
                 Livre unLivre = unLivreDao.readByISBN( ISBN );
                 if( unLivre == null ) {
