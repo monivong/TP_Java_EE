@@ -104,6 +104,38 @@ public class EvaluationCoursDao extends Dao<EvaluationCours> {
         }
         return null;
     }
+    public EvaluationCours readByIdLivre(String id) {        
+        PreparedStatement stm = null;
+        try {
+            stm = cnx.prepareStatement("SELECT * FROM evaluationcours WHERE idLivre = ?");
+            stm.setString(1,id);
+            ResultSet r = stm.executeQuery();
+            if (r.next()) {
+                //User c = new User(r.getString("numId"),r.getString("mdp"));
+                EvaluationCours c = new EvaluationCours();
+                c.setId(r.getInt("id"));
+                c.setIdLivre(r.getString("idLivre"));
+                c.setIdProf(r.getString("idProf"));
+                c.setIdCours(r.getString("idCours"));
+                c.setNote(r.getInt("note"));
+                c.setCommentaire(r.getString("commentaire"));
+                r.close();
+                stm.close();
+                return c;
+            }
+        } catch (SQLException exp) {
+			
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {            
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
     public List<EvaluationCours> readBooksListByCourseNumber(String idCours) {
         PreparedStatement stm = null;
         List<EvaluationCours> listeDesLivresEvalues = new ArrayList<EvaluationCours>();

@@ -46,7 +46,7 @@
             }
             List<EvaluationCours> listeDesLivresEvalues = (ArrayList<EvaluationCours>) session.getAttribute("listeDesLivresEvalues"); 
             if( listeDesLivresEvalues.size() > 0) {
-                out.println("<table class=\"table table-striped\"");
+                out.println("<table class=\"table table-striped table-bordered\"");
                 out.println("<tr>");
                 out.println("<th>ISBN</th>");
                 out.println("<th>Auteur(s)</th>");
@@ -54,7 +54,6 @@
                 out.println("<th>Nombre évaluation générale</th>");
                 out.println("<th>Moyenne des évaluations générales</th>");
                 out.println("</tr>");
-
                 for(int i=0; i < listeDesLivresEvalues.size(); i++ ) {
 
                     Class.forName( request.getServletContext().getInitParameter("jdbcDriver"));
@@ -62,7 +61,7 @@
                     LivreDao unLivreDao = new LivreDao( Connexion.getInstance() );
                     Livre unLivre = unLivreDao.read( listeDesLivresEvalues.get(i).getIdLivre() );
 
-                    out.println("<tr>");                
+                    out.println("<tr class=\"book\">");                
                         out.println("<td>" + unLivre.getISBN() + "</td>");
                         out.println("<td>" + unLivre.getNomAuteur() + "</td>");
                         out.println("<td>" + unLivre.getTitre() + "</td>");
@@ -71,6 +70,14 @@
                         out.println("<td>" + uneEvaluationDao.readNumberOfGeneralEvaluationById( unLivre.getISBN() ) + "</td>");
                         out.println("<td>" + uneEvaluationDao.readAverageNoteById( unLivre.getISBN() ) + "</td>");                
                     out.println("</tr>");
+                    
+                    EvaluationCoursDao uneEvaluationCoursDao = new EvaluationCoursDao( Connexion.getInstance() );
+                    EvaluationCours uneEvaluationCours = uneEvaluationCoursDao.readByIdLivre( unLivre.getISBN() );
+                    out.println("<tr class=\"comments\" style=\"display:none\">");
+                        out.println("<td colspan=\"2\" align=\"center\">" + uneEvaluationCours.getNote() + "</td>");
+                        out.println("<td colspan=\"3\">" + uneEvaluationCours.getCommentaire() + "</td>");
+                    out.println("</tr>");
+
                 }
                 out.println("</table>");
             } 
@@ -78,3 +85,11 @@
     }
 %>    
 </div>
+<script>
+    $(document).ready(function() {
+        $(".book").click(function() {
+            $(this).next().toggle("slow");
+        });
+        $(".book").mouseover().css("cursor", "pointer");
+    });
+</script>    
